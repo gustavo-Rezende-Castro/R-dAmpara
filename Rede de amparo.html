@@ -2543,5 +2543,28 @@ window.removeImage = removeImage;
 window.filterOngs = filterOngs;
 window.filterChats = filterChats;
 </script>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyB_Ln_geOfvrqtr2BLZS6TM67FdHQpB3sQ",
+    authDomain: "redampara.firebaseapp.com",
+    projectId: "redampara",
+    storageBucket: "redampara.firebasestorage.app",
+    messagingSenderId: "998828444090",
+    appId: "1:998828444090:web:4ff18ffc2000b303d23583",
+    measurementId: "G-GSV8GE29BE"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 </body>
 </html>
