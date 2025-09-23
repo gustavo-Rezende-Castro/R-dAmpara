@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rede de Amparo - Criar Conta</title>
+    <title>Rede de Amparo</title>
     
-    <!-- Firebase 8.x (versão mais estável) -->
+    <!-- Firebase Versão SIMPLES -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     
     <script>
-        // Configuração do Firebase - MESMA que você já tem
+        // 🔥 USE A NOVA CHAVE QUE VOCÊ COLOU
         const firebaseConfig = {
-            apiKey: "AIzaSyCkAj7wfzmOGPGs1mNTTX9RIx407LE-YmG",
+            apiKey: "AIzaSyCkAj7wfzmOGPGs1mNTTX9RIx4O7LE-Ym0",
             authDomain: "bancodarede.firebaseapp.com",
             projectId: "bancodarede",
             storageBucket: "bancodarede.firebasestorage.app",
@@ -22,17 +22,14 @@
         };
 
         // Inicializar Firebase
-        console.log("🔧 Iniciando Firebase...");
         firebase.initializeApp(firebaseConfig);
-        console.log("✅ Firebase inicializado!");
+        console.log("✅ Firebase configurado com nova chave!");
 
-        // Função para criar conta
         function criarConta() {
             const email = document.getElementById('email').value;
             const senha = document.getElementById('senha').value;
             const mensagem = document.getElementById('mensagem');
 
-            // Validar campos
             if (!email || !senha) {
                 mensagem.innerHTML = "❌ Preencha email e senha!";
                 mensagem.style.color = "red";
@@ -40,7 +37,7 @@
             }
 
             if (senha.length < 6) {
-                mensagem.innerHTML = "❌ Senha deve ter 6+ caracteres!";
+                mensagem.innerHTML = "❌ Senha precisa de 6+ caracteres";
                 mensagem.style.color = "red";
                 return;
             }
@@ -48,42 +45,18 @@
             mensagem.innerHTML = "⏳ Criando conta...";
             mensagem.style.color = "blue";
 
-            console.log("📧 Tentando criar conta:", email);
-
-            // CRIAR CONTA
             firebase.auth().createUserWithEmailAndPassword(email, senha)
                 .then((userCredential) => {
-                    // SUCESSO
-                    console.log("✅ Conta criada:", userCredential.user);
-                    mensagem.innerHTML = "🎉 Conta criada com sucesso!";
+                    mensagem.innerHTML = "✅ Conta criada com sucesso!";
                     mensagem.style.color = "green";
-                    
-                    // Redirecionar ou mostrar mensagem
-                    alert("Bem-vindo à Rede de Amparo! ✅");
+                    alert("🎉 Bem-vindo à Rede de Amparo!");
                 })
                 .catch((error) => {
-                    // ERRO
-                    console.error("❌ Erro ao criar conta:", error);
                     mensagem.innerHTML = "❌ Erro: " + error.message;
                     mensagem.style.color = "red";
+                    console.error("Erro detalhado:", error);
                 });
         }
-
-        // Verificar se Firebase Auth está carregado
-        setTimeout(() => {
-            try {
-                const auth = firebase.auth();
-                console.log("🔥 Firebase Auth carregado:", auth);
-                document.getElementById('status').innerHTML = 
-                    "✅ Sistema pronto para criar contas!";
-                document.getElementById('status').style.background = "#d4ffd4";
-            } catch (error) {
-                console.error("❌ Erro no Firebase Auth:", error);
-                document.getElementById('status').innerHTML = 
-                    "❌ Erro no Firebase: " + error.message;
-                document.getElementById('status').style.background = "#ffd4d4";
-            }
-        }, 1000);
     </script>
 
     <style>
@@ -92,7 +65,7 @@
             max-width: 400px;
             margin: 50px auto;
             padding: 20px;
-            background: #f5f5f5;
+            background: #f0f8ff;
         }
         .container {
             background: white;
@@ -104,9 +77,9 @@
             width: 100%;
             padding: 12px;
             margin: 8px 0;
-            box-sizing: border-box;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 5px;
+            box-sizing: border-box;
         }
         button {
             background: #28a745;
@@ -118,12 +91,12 @@
         button:hover {
             background: #218838;
         }
-        #mensagem, #status {
+        #mensagem {
             padding: 10px;
-            border-radius: 4px;
-            margin: 10px 0;
-            text-align: center;
+            margin: 15px 0;
+            border-radius: 5px;
             font-weight: bold;
+            text-align: center;
         }
     </style>
 </head>
@@ -132,18 +105,14 @@
         <h2>🔗 Rede de Amparo</h2>
         <p><strong>Criar Nova Conta</strong></p>
         
-        <div id="status">
-            Verificando sistema...
-        </div>
-        
         <input type="email" id="email" placeholder="seu@email.com" required>
         <input type="password" id="senha" placeholder="Senha (mínimo 6 caracteres)" required>
-        <button onclick="criarConta()">📝 Criar Minha Conta</button>
+        <button onclick="criarConta()">📝 Criar Conta</button>
         
         <div id="mensagem"></div>
         
         <p style="font-size: 12px; color: #666; margin-top: 20px;">
-            🔥 Firebase Project: bancodarede<br>
+            🔥 Usando NOVA chave API<br>
             ✅ Authentication: ATIVADO
         </p>
     </div>
