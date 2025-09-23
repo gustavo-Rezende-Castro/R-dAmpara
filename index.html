@@ -428,16 +428,13 @@
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-green-50 text-gray-800 min-h-screen">
 
-  <!-- Toasts -->
   <div id="toasts" class="fixed top-5 right-5 z-50 space-y-2"></div>
 
-  <!-- Modal para visualização de imagem -->
   <div id="imageModal" class="image-modal">
     <span class="close-modal">&times;</span>
     <img class="image-modal-content" id="modalImage">
   </div>
 
-  <!-- Header -->
   <header class="sticky top-0 bg-white/80 backdrop-blur-sm border-b border-gray-200 z-30 shadow-sm">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -467,7 +464,6 @@
         <button onclick="navTo('account')" id="navAccount" class="px-3 py-1 rounded-lg hover:bg-slate-50 transition-all flex items-center gap-1">
           <i class="fas fa-user"></i> Conta
         </button>
-        <!-- Botão Admin (visível apenas para desenvolvedor) -->
         <button id="navAdmin" class="px-3 py-1 rounded-lg hover:bg-slate-50 transition-all flex items-center gap-1 hidden" onclick="navTo('admin')">
           <i class="fas fa-crown"></i> Admin
         </button>
@@ -488,10 +484,8 @@
     </div>
   </header>
 
-  <!-- Main -->
   <main class="max-w-6xl mx-auto px-4 py-6">
 
-    <!-- Auth card (centered) -->
     <section id="screen-auth" class="">
       <div class="max-w-md mx-auto bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
         <div class="text-center mb-4">
@@ -503,7 +497,6 @@
         <p class="text-sm text-gray-600 mb-6 text-center">Conecte pessoas, ONGs e movimentos sociais — tudo em um só lugar.</p>
 
         <div id="auth-forms">
-          <!-- Login -->
           <div id="login-view">
             <div class="mb-4">
               <div class="relative">
@@ -532,7 +525,6 @@
             </div>
           </div>
 
-          <!-- Register (hidden) -->
           <div id="register-view" class="hidden">
             <div class="mb-2">
               <div class="relative">
@@ -574,7 +566,6 @@
             </div>
           </div>
 
-          <!-- Forgot Password (hidden) -->
           <div id="forgot-view" class="hidden">
             <p class="text-sm text-gray-600 mb-4 text-center">Informe seu email para recuperar a senha:</p>
             <div class="mb-4">
@@ -596,16 +587,13 @@
       </div>
     </section>
 
-    <!-- App screens -->
     <section id="screen-app" class="hidden space-y-6">
 
-      <!-- Composer / feed composer -->
       <div id="composer" class="bg-white rounded-2xl p-4 shadow-lg border border-gray-100 flex gap-4">
         <img id="composerAvatar" src="" class="w-14 h-14 rounded-full object-cover border-2 border-white shadow" alt="avatar"/>
         <div class="flex-1">
           <textarea id="composerText" rows="3" placeholder="Compartilhe uma necessidade, projeto ou pedido de ajuda..." class="w-full border border-gray-200 rounded-lg p-3 focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"></textarea>
           
-          <!-- Área de preview de imagens -->
           <div id="imagePreview" class="image-preview mb-3"></div>
           
           <div class="flex items-center justify-between mt-3">
@@ -625,12 +613,10 @@
         </div>
       </div>
 
-      <!-- Feed -->
       <div id="feed-screen" class="">
         <div id="feedList" class="space-y-4"></div>
       </div>
 
-      <!-- Search -->
       <div id="search-screen" class="hidden">
         <div class="bg-white rounded-2xl p-4 shadow-lg border border-gray-100">
           <div class="flex gap-2 mb-3">
@@ -648,7 +634,6 @@
         </div>
       </div>
 
-      <!-- ONGs (nova tela) -->
       <div id="ongs-screen" class="hidden">
         <div class="flex items-center justify-between mb-4">
           <h2 class="text-xl font-semibold flex items-center gap-2"><i class="fas fa-building text-[#3ba97c]"></i> ONGs</h2>
@@ -679,7 +664,6 @@
         <div id="ongsList" class="space-y-4"></div>
       </div>
 
-      <!-- Minhas ONGs (mantida para compatibilidade) -->
       <div id="myongs-screen" class="hidden">
         <div class="flex items-center justify-between mb-4">
           <h2 class="text-xl font-semibold flex items-center gap-2"><i class="fas fa-building text-[#3ba97c]"></i> Minhas ONGs</h2>
@@ -690,7 +674,6 @@
         <div id="myOngsList" class="space-y-4"></div>
       </div>
 
-      <!-- Chats - DESIGN MELHORADO -->
       <div id="chats-screen" class="hidden">
         <div class="grid md:grid-cols-3 gap-4 h-[70vh]">
           <div class="col-span-1 bg-white rounded-2xl p-4 shadow-lg border border-gray-100 flex flex-col">
@@ -725,7 +708,6 @@
         </div>
       </div>
 
-      <!-- Account -->
       <div id="account-screen" class="hidden">
         <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 max-w-2xl mx-auto">
           <div class="flex flex-col items-center mb-4">
@@ -762,7 +744,6 @@
         </div>
       </div>
 
-      <!-- Admin Panel (hidden by default) -->
       <div id="admin-screen" class="hidden">
         <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
           <div class="flex items-center justify-between mb-6">
@@ -770,25 +751,20 @@
             <div class="text-sm text-gray-500">Acesso exclusivo para administradores</div>
           </div>
 
-          <!-- Tabs de navegação -->
           <div class="flex gap-2 mb-6 bg-gray-100 p-1 rounded-lg">
             <div class="tab-button active" data-tab="pending">Pendentes de Verificação</div>
             <div class="tab-button" data-tab="verified">Verificados</div>
             <div class="tab-button" data-tab="stats">Estatísticas</div>
           </div>
 
-          <!-- Conteúdo das abas -->
           <div id="tab-content">
-            <!-- Aba Pendentes -->
             <div id="tab-pending" class="tab-panel">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Verificação de Usuários -->
                 <div class="bg-slate-50 p-4 rounded-lg">
                   <h3 class="font-semibold mb-3 flex items-center gap-2"><i class="fas fa-user-check text-blue-500"></i> Verificar Usuários</h3>
                   <div id="userVerificationList" class="space-y-3 max-h-80 overflow-y-auto"></div>
                 </div>
 
-                <!-- Verificação de ONGs -->
                 <div class="bg-slate-50 p-4 rounded-lg">
                   <h3 class="font-semibold mb-3 flex items-center gap-2"><i class="fas fa-building text-green-500"></i> Verificar ONGs</h3>
                   <div id="ongVerificationList" class="space-y-3 max-h-80 overflow-y-auto"></div>
@@ -796,16 +772,13 @@
               </div>
             </div>
 
-            <!-- Aba Verificados -->
             <div id="tab-verified" class="tab-panel hidden">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Usuários Verificados -->
                 <div class="bg-slate-50 p-4 rounded-lg">
                   <h3 class="font-semibold mb-3 flex items-center gap-2"><i class="fas fa-user-check text-blue-500"></i> Usuários Verificados</h3>
                   <div id="verifiedUsersList" class="space-y-3 max-h-80 overflow-y-auto"></div>
                 </div>
 
-                <!-- ONGs Verificadas -->
                 <div class="bg-slate-50 p-4 rounded-lg">
                   <h3 class="font-semibold mb-3 flex items-center gap-2"><i class="fas fa-building text-green-500"></i> ONGs Verificadas</h3>
                   <div id="verifiedOngsList" class="space-y-3 max-h-80 overflow-y-auto"></div>
@@ -813,7 +786,6 @@
               </div>
             </div>
 
-            <!-- Aba Estatísticas -->
             <div id="tab-stats" class="tab-panel hidden">
               <div class="bg-slate-50 p-4 rounded-lg">
                 <h3 class="font-semibold mb-3 flex items-center gap-2"><i class="fas fa-chart-bar text-purple-500"></i> Estatísticas da Plataforma</h3>
@@ -844,7 +816,6 @@
     </section>
   </main>
 
-  <!-- Floating bottom nav for mobile -->
   <div class="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 bg-white rounded-full shadow-lg px-4 py-2 z-40 border border-gray-100">
     <div class="flex gap-5">
       <button onclick="navTo('feed')" class="text-[#4f8bc9] text-xl transition-all hover:scale-110"><i class="fas fa-home"></i></button>
@@ -854,15 +825,44 @@
         <span id="mobile-chat-notification" class="notification-dot hidden"></span>
       </button>
       <button onclick="navTo('account')" class="text-[#f4c542] text-xl transition-all hover:scale-110"><i class="fas fa-user"></i></button>
-      <!-- Botão Admin para mobile (visível apenas para desenvolvedor) -->
       <button id="mobile-navAdmin" class="text-yellow-500 text-xl transition-all hover:scale-110 hidden" onclick="navTo('admin')">
         <i class="fas fa-crown"></i>
       </button>
     </div>
   </div>
 
-<script>
-/* ========= Utilities: toasts, storage helpers ========= */
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { 
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, 
+  signOut, onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { 
+  getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc, 
+  query, where, onSnapshot, orderBy, serverTimestamp, arrayUnion, arrayRemove 
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB_Ln_geOfvrqtr2BLZS6TM67FdHQpB3sQ",
+  authDomain: "bancodarede.firebaseapp.com",
+  projectId: "bancodarede",
+  storageBucket: "bancodarede.firebasestorage.app",
+  messagingSenderId: "998828444090",
+  appId: "1:998828444090:web:4ff18ffc2000b303d23583",
+  measurementId: "G-GSV8GE29BE"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+const COLECOES = {
+  USUARIOS: "wuuqdnbwK4CFNX8YW3mR",
+  POSTS: "OwOLADQvf2LrL9KCAOwx", 
+  ONGS: "ongs",
+  CONVERSAS: "conversas"
+};
+
 function toast(msg, type='info', duration=3500){
   const container = document.getElementById('toasts');
   const el = document.createElement('div');
@@ -872,7 +872,6 @@ function toast(msg, type='info', duration=3500){
   else if(type==='warning') el.classList.add('bg-yellow-500','text-black');
   else el.classList.add('bg-blue-600');
   
-  // Adicionar ícone baseado no tipo
   let icon = 'info-circle';
   if(type==='success') icon = 'check-circle';
   else if(type==='error') icon = 'exclamation-circle';
@@ -891,16 +890,16 @@ function toast(msg, type='info', duration=3500){
 function saveToStorage(key, obj){ localStorage.setItem(key, JSON.stringify(obj)); }
 function loadFromStorage(key, fallback){ const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
 
-/* ========= App state ========= */
 let USERS = loadFromStorage('red_users', []);
-let FEED = loadFromStorage('red_feed', []); // posts
+let FEED = loadFromStorage('red_feed', []);
 let CURRENT = loadFromStorage('red_current', null);
 let NEXT_POST_ID = Date.now();
-let CHATS = loadFromStorage('red_chats', {}); // Estrutura de chats global
-let REPLYING_TO = null; // Mensagem sendo respondida
-let POST_IMAGES = []; // Imagens para a próxima postagem
+let CHATS = loadFromStorage('red_chats', {});
+let REPLYING_TO = null;
+let POST_IMAGES = [];
+let SELECTED_CHAT_ID = null;
+let SELECTED_CHAT_USER = null;
 
-// Criar conta de desenvolvedor se não existir
 function createDeveloperAccount() {
   const devAccount = {
     id: 'dev001',
@@ -917,16 +916,13 @@ function createDeveloperAccount() {
     isOwner: true
   };
   
-  // Verificar se já existe
   const existingDev = USERS.find(u => u.email === devAccount.email);
   if (!existingDev) {
     USERS.push(devAccount);
     saveToStorage('red_users', USERS);
-    console.log('Conta de administrador criada: galvaorezendeg@gmail.com / admin123');
   }
 }
 
-/* ========= Navigation / App bootstrap ========= */
 function openLogin(){
   document.getElementById('screen-auth').scrollIntoView({behavior: 'smooth'});
   document.getElementById('loginEmail').focus();
@@ -954,11 +950,9 @@ function showForgotPassword(){
 }
 
 function navTo(name){
-  // hide auth if showing
   document.getElementById('screen-auth').classList.add('hidden');
   document.getElementById('screen-app').classList.remove('hidden');
 
-  // hide all app screens
   ['feed-screen','search-screen','ongs-screen','myongs-screen','chats-screen','account-screen','admin-screen'].forEach(id => {
     document.getElementById(id).classList.add('hidden');
   });
@@ -1001,14 +995,13 @@ function navTo(name){
     loadAdminPanel();
   }
 
-  // show header user
   if(CURRENT){
     document.getElementById('headerUser').classList.remove('hidden');
     document.getElementById('btnLoginHeader').classList.add('hidden');
-    document.getElementById('headerAvatar').src = CURRENT.profilePic || (`https://ui-avatars.com/api/?name=${encodeURIComponent(CURRENT.name)}&background=4f8bc9&color=fff`);
+    document.getElementById('headerAvatar').src = CURRENT.profilePic || 
+      `https://ui-avatars.com/api/?name=${encodeURIComponent(CURRENT.name)}&background=4f8bc9&color=fff`;
     document.getElementById('headerName').innerText = CURRENT.name;
     
-    // Mostrar botão admin apenas para desenvolvedor
     if (CURRENT.isDeveloper) {
       document.getElementById('navAdmin').classList.remove('hidden');
       document.getElementById('mobile-navAdmin').classList.remove('hidden');
@@ -1019,15 +1012,13 @@ function navTo(name){
   }
 }
 
-/* ========= Auth: register / login / logout ========= */
-function doRegister(){
+async function doRegister(){
   const name = document.getElementById('regNome').value.trim();
   const usuario = document.getElementById('regUsuario').value.trim();
   const email = document.getElementById('regEmail').value.trim().toLowerCase();
   const pass = document.getElementById('regPass').value;
   const pass2 = document.getElementById('regPass2').value;
   
-  // Validação básica
   if(!name || !usuario || !email || !pass || !pass2){ 
     toast('Preencha todos os campos','error'); 
     highlightEmptyFields(['regNome', 'regUsuario', 'regEmail', 'regPass', 'regPass2']);
@@ -1042,53 +1033,55 @@ function doRegister(){
     }, 500);
     return; 
   }
-  
-  if(USERS.some(u => u.user === usuario)){ 
-    toast('Este @username já existe','error'); 
-    document.getElementById('regUsuario').classList.add('input-error', 'shake');
-    setTimeout(() => {
-      document.getElementById('regUsuario').classList.remove('shake');
-    }, 500);
-    return; 
-  }
-  
-  if(USERS.some(u => u.email === email)){ 
-    toast('Email já cadastrado','error'); 
-    document.getElementById('regEmail').classList.add('input-error', 'shake');
-    setTimeout(() => {
-      document.getElementById('regEmail').classList.remove('shake');
-    }, 500);
-    return; 
-  }
 
-  // Mostrar estado de carregamento
   const registerButton = document.getElementById('registerButton');
   registerButton.classList.add('btn-loading');
 
-  // Simular processamento (remover em produção)
-  setTimeout(() => {
-    const newUser = {
-      id: 'u'+Date.now(),
-      name, user: usuario, email, pass,
-      bio:'', profilePic:'', ongs:[], chats:[],
-      isDeveloper: false,
-      verified: false,
-      isOwner: false
+  try {
+    const usersQuery = query(collection(db, COLECOES.USUARIOS), where('usuario', '==', usuario));
+    const userSnapshot = await getDocs(usersQuery);
+    if (!userSnapshot.empty) {
+      throw new Error('Este @username já existe');
+    }
+
+    const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+    const user = userCredential.user;
+    
+    const userData = {
+      nome: name,
+      usuario: usuario,
+      email: email,
+      bio: '',
+      fotoPerfil: '',
+      ongs: [],
+      verificado: false,
+      tipo: "doador",
+      dataCadastro: serverTimestamp()
     };
-    USERS.push(newUser);
-    saveToStorage('red_users', USERS);
+    
+    await setDoc(doc(db, COLECOES.USUARIOS, user.uid), userData);
     
     registerButton.classList.remove('btn-loading');
     toast('Conta criada com sucesso! Faça login','success');
     showLogin();
     
-    // Preencher automaticamente o login
     document.getElementById('loginEmail').value = email;
     document.getElementById('loginPass').value = pass;
-  }, 1000);
+    
+  } catch (error) {
+    registerButton.classList.remove('btn-loading');
+    toast(error.message,'error');
+    
+    if (error.message.includes('username')) {
+      document.getElementById('regUsuario').classList.add('input-error', 'shake');
+      setTimeout(() => {
+        document.getElementById('regUsuario').classList.remove('shake');
+      }, 500);
+    }
+  }
 }
 
-function doLogin(){
+async function doLogin(){
   const loginValue = document.getElementById('loginEmail').value.trim().toLowerCase();
   const pass = document.getElementById('loginPass').value;
   
@@ -1098,45 +1091,59 @@ function doLogin(){
     return; 
   }
 
-  // Mostrar estado de carregamento
   const loginButton = document.getElementById('loginButton');
   loginButton.classList.add('btn-loading');
 
-  // Simular processamento (remover em produção)
-  setTimeout(() => {
-    const found = USERS.find(u => (u.email === loginValue || u.user === loginValue) && u.pass === pass);
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, loginValue, pass);
+    const user = userCredential.user;
     
-    if(!found){ 
+    const userDoc = await getDoc(doc(db, COLECOES.USUARIOS, user.uid));
+    
+    if (userDoc.exists()) {
+      CURRENT = { id: user.uid, ...userDoc.data() };
+      
+      CURRENT.name = CURRENT.nome || '';
+      CURRENT.user = CURRENT.usuario || '';
+      CURRENT.email = CURRENT.email || '';
+      CURRENT.bio = CURRENT.bio || '';
+      CURRENT.profilePic = CURRENT.fotoPerfil || '';
+      CURRENT.ongs = CURRENT.ongs || [];
+      CURRENT.verified = CURRENT.verificado || false;
+      CURRENT.isDeveloper = CURRENT.isDeveloper || false;
+      
+      saveToStorage('red_current', CURRENT);
+      
       loginButton.classList.remove('btn-loading');
-      toast('Credenciais inválidas','error'); 
-      document.getElementById('loginEmail').classList.add('input-error', 'shake');
-      document.getElementById('loginPass').classList.add('input-error', 'shake');
-      setTimeout(() => {
-        document.getElementById('loginEmail').classList.remove('shake');
-        document.getElementById('loginPass').classList.remove('shake');
-      }, 500);
-      return; 
+      toast(`Bem-vindo(a), ${CURRENT.name}`,'success');
+      
+      document.getElementById('composerAvatar').src = CURRENT.profilePic || 
+        `https://ui-avatars.com/api/?name=${encodeURIComponent(CURRENT.name)}&background=4f8bc9&color=fff`;
+      
+      navTo('feed');
+      
+      document.getElementById('headerUser').classList.remove('hidden');
+      document.getElementById('headerAvatar').src = CURRENT.profilePic || 
+        `https://ui-avatars.com/api/?name=${encodeURIComponent(CURRENT.name)}&background=4f8bc9&color=fff`;
+      document.getElementById('headerName').innerText = CURRENT.name;
+      document.getElementById('btnLoginHeader').classList.add('hidden');
+      
+      checkUnreadMessages();
+      
+    } else {
+      throw new Error('Dados do usuário não encontrados');
     }
     
-    CURRENT = found;
-    saveToStorage('red_current', CURRENT);
-    
+  } catch (error) {
     loginButton.classList.remove('btn-loading');
-    toast(`Bem-vindo(a), ${CURRENT.name}`,'success');
-    
-    // update composer avatar
-    document.getElementById('composerAvatar').src = CURRENT.profilePic || (`https://ui-avatars.com/api/?name=${encodeURIComponent(CURRENT.name)}&background=4f8bc9&color=fff`);
-    // show feed
-    navTo('feed');
-    // update header user
-    document.getElementById('headerUser').classList.remove('hidden');
-    document.getElementById('headerAvatar').src = CURRENT.profilePic || (`https://ui-avatars.com/api/?name=${encodeURIComponent(CURRENT.name)}&background=4f8bc9&color=fff`);
-    document.getElementById('headerName').innerText = CURRENT.name;
-    document.getElementById('btnLoginHeader').classList.add('hidden');
-    
-    // Verificar mensagens não lidas
-    checkUnreadMessages();
-  }, 1000);
+    toast('Credenciais inválidas','error');
+    document.getElementById('loginEmail').classList.add('input-error', 'shake');
+    document.getElementById('loginPass').classList.add('input-error', 'shake');
+    setTimeout(() => {
+      document.getElementById('loginEmail').classList.remove('shake');
+      document.getElementById('loginPass').classList.remove('shake');
+    }, 500);
+  }
 }
 
 function doRecoverPassword(){
@@ -1151,34 +1158,29 @@ function doRecoverPassword(){
     return; 
   }
   
-  if(!USERS.some(u => u.email === email)){ 
-    toast('Email não encontrado','error'); 
-    document.getElementById('forgotEmail').classList.add('input-error', 'shake');
-    setTimeout(() => {
-      document.getElementById('forgotEmail').classList.remove('shake');
-    }, 500);
-    return; 
-  }
-  
   toast('Email de recuperação enviado (simulação)','success');
   setTimeout(() => {
     showLogin();
   }, 2000);
 }
 
-function doLogout(){
-  CURRENT = null;
-  localStorage.removeItem('red_current');
-  toast('Você saiu da conta','info');
-  // show auth
-  document.getElementById('screen-auth').classList.remove('hidden');
-  document.getElementById('screen-app').classList.add('hidden');
-  document.getElementById('headerUser').classList.add('hidden');
-  document.getElementById('btnLoginHeader').classList.remove('hidden');
+async function doLogout(){
+  try {
+    await signOut(auth);
+    CURRENT = null;
+    localStorage.removeItem('red_current');
+    toast('Você saiu da conta','info');
+    
+    document.getElementById('screen-auth').classList.remove('hidden');
+    document.getElementById('screen-app').classList.add('hidden');
+    document.getElementById('headerUser').classList.add('hidden');
+    document.getElementById('btnLoginHeader').classList.remove('hidden');
+  } catch (error) {
+    toast('Erro ao sair','error');
+  }
 }
 
-/* ========= Posts / Feed ========= */
-function createPost(){
+async function createPost(){
   if(!CURRENT){ toast('Faça login para publicar','warning'); return; }
   const text = document.getElementById('composerText').value.trim();
   if(!text && POST_IMAGES.length === 0){ 
@@ -1186,141 +1188,154 @@ function createPost(){
     return; 
   }
   
-  const post = {
-    id: 'p'+(NEXT_POST_ID++),
-    authorName: CURRENT.name,
-    authorUser: CURRENT.user,
-    authorPic: CURRENT.profilePic || '',
-    text, 
-    images: [...POST_IMAGES],
-    likes:[], 
-    comments:[], 
-    created: new Date().toISOString(),
-    verified: CURRENT.verified || false
-  };
-  
-  FEED.unshift(post);
-  saveToStorage('red_feed', FEED);
-  document.getElementById('composerText').value = '';
-  
-  // Limpar imagens
-  POST_IMAGES = [];
-  document.getElementById('imagePreview').innerHTML = '';
-  
-  toast('Publicação criada','success');
-  loadFeed();
+  try {
+    const postData = {
+      autorId: CURRENT.id,
+      autorNome: CURRENT.name,
+      autorUsuario: CURRENT.user,
+      texto: text,
+      imagens: POST_IMAGES,
+      curtidas: [],
+      comentarios: [],
+      data: serverTimestamp(),
+      verificado: CURRENT.verified || false,
+      tipo: "ajuda"
+    };
+    
+    await addDoc(collection(db, COLECOES.POSTS), postData);
+    
+    document.getElementById('composerText').value = '';
+    POST_IMAGES = [];
+    document.getElementById('imagePreview').innerHTML = '';
+    
+    toast('Publicação criada','success');
+    loadFeed();
+    
+  } catch (error) {
+    toast('Erro ao criar publicação: ' + error.message,'error');
+  }
 }
 
-function loadFeed(){
+async function loadFeed(){
   const container = document.getElementById('feedList');
-  container.innerHTML = '';
-  if(FEED.length === 0){
-    container.innerHTML = `<div class="bg-white p-6 rounded-2xl shadow text-gray-600 text-center"><i class="fas fa-inbox text-3xl mb-2 text-gray-400"></i><p>Sem publicações ainda.</p></div>`;
-    return;
+  container.innerHTML = '<div class="text-center p-4">Carregando...</div>';
+  
+  try {
+    const q = query(collection(db, COLECOES.POSTS), orderBy('data', 'desc'));
+    const querySnapshot = await getDocs(q);
+    
+    container.innerHTML = '';
+    
+    if(querySnapshot.empty){
+      container.innerHTML = `<div class="bg-white p-6 rounded-2xl shadow text-gray-600 text-center">
+        <i class="fas fa-inbox text-3xl mb-2 text-gray-400"></i><p>Sem publicações ainda.</p></div>`;
+      return;
+    }
+    
+    querySnapshot.forEach((doc) => {
+      const post = { id: doc.id, ...doc.data() };
+      const postElement = createPostElement(post);
+      container.appendChild(postElement);
+    });
+    
+  } catch (error) {
+    toast('Erro ao carregar feed: ' + error.message,'error');
+  }
+}
+
+function createPostElement(post){
+  const card = document.createElement('div');
+  card.className = 'bg-white rounded-2xl p-4 shadow-lg border border-gray-100';
+  
+  let badge = '';
+  if (post.autorUsuario === 'galvao') {
+    badge = '<span class="gold-badge"><i class="fas fa-crown"></i></span>';
+  } else if (post.verificado) {
+    badge = '<span class="verified-badge"><i class="fas fa-check"></i></span>';
   }
   
-  FEED.forEach(post => {
-    const card = document.createElement('div');
-    card.className = 'bg-white rounded-2xl p-4 shadow-lg border border-gray-100';
+  const isLiked = post.curtidas && post.curtidas.includes(CURRENT.id);
+  
+  let imagesHtml = '';
+  if (post.imagens && post.imagens.length > 0) {
+    const imageCount = post.imagens.length;
+    let gridClass = 'post-images';
     
-    // Definir o badge correto
-    let badge = '';
-    if (post.authorUser === 'galvao') {
-      badge = '<span class="gold-badge"><i class="fas fa-crown"></i></span>';
-    } else if (post.verified) {
-      badge = '<span class="verified-badge"><i class="fas fa-check"></i></span>';
+    if (imageCount === 1) {
+      gridClass += ' single';
+    } else if (imageCount === 3) {
+      gridClass += ' three';
     }
     
-    // Verificar se o usuário atual já curtiu
-    const isLiked = post.likes.includes(CURRENT.user);
-    
-    // Gerar HTML para imagens se existirem
-    let imagesHtml = '';
-    if (post.images && post.images.length > 0) {
-      const imageCount = post.images.length;
-      let gridClass = 'post-images';
-      
-      if (imageCount === 1) {
-        gridClass += ' single';
-      } else if (imageCount === 3) {
-        gridClass += ' three';
-      }
-      
-      imagesHtml = `<div class="${gridClass}">`;
-      post.images.forEach((img, idx) => {
-        imagesHtml += `<img src="${img}" alt="Imagem ${idx+1}" onclick="openImageModal('${img}')">`;
-      });
-      imagesHtml += '</div>';
-    }
-    
-    card.innerHTML = `
-      <div class="flex gap-3">
-        <img src="${post.authorPic || ('https://ui-avatars.com/api/?name='+encodeURIComponent(post.authorName)+'&background=4f8bc9&color=fff')}" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow" />
-        <div class="flex-1">
-          <div class="flex justify-between items-start">
-            <div>
-              <div class="font-semibold flex items-center">${escapeHtml(post.authorName)} ${badge} <span class="text-sm text-gray-500">@${escapeHtml(post.authorUser)}</span></div>
-              <div class="text-xs text-gray-400"><i class="far fa-clock"></i> ${new Date(post.created).toLocaleString()}</div>
-            </div>
-            <div class="text-xs text-gray-400">RêdAmpara</div>
-          </div>
-          ${post.text ? `<p class="mt-3 text-gray-800">${escapeHtml(post.text)}</p>` : ''}
-          ${imagesHtml}
-          
-          <div class="mt-3 flex items-center gap-4 text-sm text-gray-600">
-            <button class="like-btn flex items-center gap-1 ${isLiked ? 'liked' : ''}" data-id="${post.id}">
-              <i class="${isLiked ? 'fas' : 'far'} fa-heart"></i> 
-              Curtir (<span class="like-count">${post.likes.length}</span>)
-            </button>
-            <button class="toggle-comments flex items-center gap-1" data-id="${post.id}"><i class="far fa-comment"></i> Comentar (${post.comments.length})</button>
-            <button onclick="startConversation('${post.authorUser}')" class="text-green-600 flex items-center gap-1"><i class="far fa-envelope"></i> Conversar</button>
-          </div>
-
-          <div class="mt-3 comment-area hidden" id="comments-${post.id}">
-            <div class="space-y-2 comment-list">
-              ${(post.comments||[]).map(c=>`<div class="text-sm border-b py-1"><strong>@${escapeHtml(c.user)}</strong>: ${escapeHtml(c.text)}</div>`).join('')}
-            </div>
-
-            <div class="mt-2 flex gap-2">
-              <input class="flex-1 border border-gray-200 p-2 rounded-lg comment-input" placeholder="Escreva um comentário..." data-id="${post.id}"/>
-              <button class="bg-[#4f8bc9] text-white px-3 py-2 rounded-lg comment-send" data-id="${post.id}"><i class="fas fa-paper-plane"></i></button>
+    imagesHtml = `<div class="${gridClass}">`;
+    post.imagens.forEach((img, idx) => {
+      imagesHtml += `<img src="${img}" alt="Imagem ${idx+1}" onclick="openImageModal('${img}')">`;
+    });
+    imagesHtml += '</div>';
+  }
+  
+  card.innerHTML = `
+    <div class="flex gap-3">
+      <img src="${post.autorPic || 
+        'https://ui-avatars.com/api/?name='+encodeURIComponent(post.autorNome)+'&background=4f8bc9&color=fff'}" 
+        class="w-12 h-12 rounded-full object-cover border-2 border-white shadow" />
+      <div class="flex-1">
+        <div class="flex justify-between items-start">
+          <div>
+            <div class="font-semibold flex items-center">${escapeHtml(post.autorNome)} ${badge} 
+              <span class="text-sm text-gray-500">@${escapeHtml(post.autorUsuario)}</span></div>
+            <div class="text-xs text-gray-400">
+              <i class="far fa-clock"></i> ${post.data ? new Date(post.data.toDate()).toLocaleString() : 'Agora'}
             </div>
           </div>
-
+          <div class="text-xs text-gray-400">RêdAmpara</div>
+        </div>
+        ${post.texto ? `<p class="mt-3 text-gray-800">${escapeHtml(post.texto)}</p>` : ''}
+        ${imagesHtml}
+        
+        <div class="mt-3 flex items-center gap-4 text-sm text-gray-600">
+          <button class="like-btn flex items-center gap-1 ${isLiked ? 'liked' : ''}" 
+            onclick="likePost('${post.id}')">
+            <i class="${isLiked ? 'fas' : 'far'} fa-heart"></i> 
+            Curtir (<span class="like-count">${post.curtidas ? post.curtidas.length : 0}</span>)
+          </button>
+          <button onclick="startConversation('${post.autorUsuario}')" class="text-green-600 flex items-center gap-1">
+            <i class="far fa-envelope"></i> Conversar
+          </button>
         </div>
       </div>
-    `;
-    container.appendChild(card);
-  });
-
-  // attach handlers
-  document.querySelectorAll('.like-btn').forEach(btn=>{
-    btn.onclick = () => {
-      const id = btn.dataset.id;
-      likePost(id);
-    };
-  });
-  document.querySelectorAll('.toggle-comments').forEach(btn=>{
-    btn.onclick = () => {
-      const id = btn.dataset.id;
-      const area = document.getElementById('comments-'+id);
-      if(area) area.classList.toggle('hidden');
-    };
-  });
-  document.querySelectorAll('.comment-send').forEach(btn=>{
-    btn.onclick = ()=>{
-      const id = btn.dataset.id;
-      const input = document.querySelector(`.comment-input[data-id="${id}"]`);
-      if(!input) return;
-      const txt = input.value.trim();
-      if(!txt){ toast('Digite um comentário','warning'); return; }
-      addComment(id, txt);
-      input.value = '';
-    };
-  });
+    </div>
+  `;
+  
+  return card;
 }
 
-// Função para abrir imagem em modal
+async function likePost(postId){
+  if(!CURRENT) return;
+  
+  try {
+    const postRef = doc(db, COLECOES.POSTS, postId);
+    const postDoc = await getDoc(postRef);
+    
+    if(postDoc.exists()){
+      const post = postDoc.data();
+      const curtidas = post.curtidas || [];
+      
+      if(curtidas.includes(CURRENT.id)){
+        await updateDoc(postRef, { curtidas: arrayRemove(CURRENT.id) });
+        toast('Like removido','info');
+      } else {
+        await updateDoc(postRef, { curtidas: arrayUnion(CURRENT.id) });
+        toast('Publicação curtida','success');
+      }
+      
+      loadFeed();
+    }
+  } catch (error) {
+    toast('Erro ao curtir: ' + error.message,'error');
+  }
+}
+
 function openImageModal(src) {
   const modal = document.getElementById('imageModal');
   const modalImg = document.getElementById('modalImage');
@@ -1328,24 +1343,20 @@ function openImageModal(src) {
   modalImg.src = src;
 }
 
-// Fechar modal ao clicar no X
 document.querySelector('.close-modal').onclick = function() {
   document.getElementById('imageModal').style.display = 'none';
 }
 
-// Fechar modal ao clicar fora da imagem
 document.getElementById('imageModal').onclick = function(e) {
   if (e.target === this) {
     this.style.display = 'none';
   }
 }
 
-// Manipulação de imagens para postagem
 document.getElementById('postImages').addEventListener('change', function(e) {
   const files = e.target.files;
   if (!files || files.length === 0) return;
   
-  // Limitar a 5 imagens
   const remainingSlots = 5 - POST_IMAGES.length;
   if (remainingSlots <= 0) {
     toast('Máximo de 5 imagens atingido', 'warning');
@@ -1363,7 +1374,6 @@ document.getElementById('postImages').addEventListener('change', function(e) {
       const imageUrl = e.target.result;
       POST_IMAGES.push(imageUrl);
       
-      // Adicionar preview
       const previewItem = document.createElement('div');
       previewItem.className = 'image-preview-item';
       previewItem.innerHTML = `
@@ -1376,17 +1386,14 @@ document.getElementById('postImages').addEventListener('change', function(e) {
     reader.readAsDataURL(file);
   }
   
-  // Resetar o input para permitir selecionar as mesmas imagens novamente
   this.value = '';
 });
 
-// Função para remover imagem do preview
 function removeImage(index) {
   POST_IMAGES.splice(index, 1);
   updateImagePreview();
 }
 
-// Atualizar preview de imagens
 function updateImagePreview() {
   const previewContainer = document.getElementById('imagePreview');
   previewContainer.innerHTML = '';
@@ -1402,719 +1409,168 @@ function updateImagePreview() {
   });
 }
 
-function likePost(postId){
-  if(!CURRENT){ toast('Faça login para curtir','warning'); return; }
-  const post = FEED.find(p => p.id === postId);
-  if(!post) return;
-  
-  // Verificar se o usuário já curtiu
-  const userIndex = post.likes.indexOf(CURRENT.user);
-  
-  if(userIndex > -1){
-    // Remover like
-    post.likes.splice(userIndex, 1);
-    toast('Like removido','info');
-  } else {
-    // Adicionar like
-    post.likes.push(CURRENT.user);
-    toast('Publicação curtida','success');
-  }
-  
-  saveToStorage('red_feed', FEED);
-  loadFeed();
-}
-
-function addComment(postId, text){
-  if(!CURRENT){ toast('Faça login para comentar','warning'); return; }
-  const post = FEED.find(p => p.id === postId);
-  if(!post) return;
-  post.comments.push({user: CURRENT.user, text, at: new Date().toISOString()});
-  saveToStorage('red_feed', FEED);
-  loadFeed();
-  toast('Comentário adicionado','success');
-}
-
-/* ========= Search ========= */
-function doSearch(){
+async function doSearch(){
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
   const cat = document.getElementById('searchCategory').value;
   const res = document.getElementById('searchResults');
   res.innerHTML = '';
   if(!q) return;
-  if(cat === 'all' || cat==='users'){
-    const users = USERS.filter(u => u.name.toLowerCase().includes(q) || u.user.toLowerCase().includes(q));
-    users.forEach(u => {
-      if (u.user === CURRENT.user) return; // Não mostrar o próprio usuário
+  
+  try {
+    if(cat === 'all' || cat==='users'){
+      const usersQuery = query(collection(db, COLECOES.USUARIOS), 
+        where('usuario', '>=', q), 
+        where('usuario', '<=', q + '\uf8ff'));
       
-      // Definir o badge correto
-      let badge = '';
-      if (u.isOwner) {
-        badge = '<span class="gold-badge"><i class="fas fa-crown"></i></span>';
-      } else if (u.verified) {
-        badge = '<span class="verified-badge"><i class="fas fa-check"></i></span>';
-      }
-      
-      const el = document.createElement('div');
-      el.className = 'bg-white p-3 rounded-lg shadow border border-gray-100 flex items-center gap-3';
-      el.innerHTML = `<img src="${u.profilePic||('https://ui-avatars.com/api/?name='+encodeURIComponent(u.name)+'&background=4f8bc9&color=fff')}" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow"/>
-        <div><div class="font-semibold flex items-center">${escapeHtml(u.name)} ${badge}</div><div class="text-xs text-gray-500">@${escapeHtml(u.user)}</div></div>
-        <div class="ml-auto"><button class="bg-[#4f8bc9] text-white px-3 py-1 rounded-lg flex items-center gap-1 shadow-md hover:shadow-lg transition-all" onclick="startConversation('${u.user}')"><i class="fas fa-comment"></i> Conversar</button></div>`;
-      res.appendChild(el);
-    });
-  }
-  if(cat === 'all' || cat==='ongs'){
-    // search ongs in all users
-    USERS.forEach(u => {
-      (u.ongs||[]).forEach(ong => {
-        if(ong.nome.toLowerCase().includes(q) || (ong.desc||'').toLowerCase().includes(q)){
-          const el = document.createElement('div');
-          el.className = 'bg-white p-3 rounded-lg shadow border border-gray-100';
-          el.innerHTML = `<div class="font-semibold flex items-center">${escapeHtml(ong.nome)} ${ong.verified ? '<span class="verified-badge"><i class="fas fa-check"></i></span>' : ''}</div><div class="text-sm text-gray-500"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(ong.local)} • ${escapeHtml(ong.category)}</div><div class="mt-1">${escapeHtml(ong.desc)}</div>`;
-          res.appendChild(el);
+      const usersSnapshot = await getDocs(usersQuery);
+      usersSnapshot.forEach((doc) => {
+        const u = { id: doc.id, ...doc.data() };
+        if (u.usuario === CURRENT.user) return;
+        
+        let badge = '';
+        if (u.isDeveloper) {
+          badge = '<span class="gold-badge"><i class="fas fa-crown"></i></span>';
+        } else if (u.verificado) {
+          badge = '<span class="verified-badge"><i class="fas fa-check"></i></span>';
         }
+        
+        const el = document.createElement('div');
+        el.className = 'bg-white p-3 rounded-lg shadow border border-gray-100 flex items-center gap-3';
+        el.innerHTML = `<img src="${u.fotoPerfil||'https://ui-avatars.com/api/?name='+encodeURIComponent(u.nome)+'&background=4f8bc9&color=fff'}" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow"/>
+          <div><div class="font-semibold flex items-center">${escapeHtml(u.nome)} ${badge}</div><div class="text-xs text-gray-500">@${escapeHtml(u.usuario)}</div></div>
+          <div class="ml-auto"><button class="bg-[#4f8bc9] text-white px-3 py-1 rounded-lg flex items-center gap-1 shadow-md hover:shadow-lg transition-all" onclick="startConversation('${u.usuario}')"><i class="fas fa-comment"></i> Conversar</button></div>`;
+        res.appendChild(el);
       });
-    });
+    }
+    
+  } catch (error) {
+    toast('Erro na busca: ' + error.message,'error');
   }
 }
 
-/* ========= ONGs Screen ========= */
-function loadOngsScreen(){
+async function loadOngsScreen(){
   const container = document.getElementById('ongsList');
-  container.innerHTML = '';
+  container.innerHTML = '<div class="text-center p-4">Carregando...</div>';
   
-  // Coletar todas as ONGs de todos os usuários
-  let allOngs = [];
-  USERS.forEach(user => {
-    if (user.ongs) {
-      user.ongs.forEach(ong => {
-        allOngs.push({ ...ong, owner: user });
-      });
+  try {
+    const querySnapshot = await getDocs(collection(db, COLECOES.ONGS));
+    container.innerHTML = '';
+    
+    if(querySnapshot.empty){
+      container.innerHTML = `<div class="bg-white p-6 rounded-2xl shadow text-gray-600 text-center">
+        <i class="fas fa-building text-3xl mb-2 text-gray-400"></i><p>Nenhuma ONG cadastrada ainda.</p></div>`;
+      return;
     }
-  });
-  
-  if(allOngs.length === 0){
-    container.innerHTML = `<div class="bg-white p-6 rounded-2xl shadow text-gray-600 text-center"><i class="fas fa-building text-3xl mb-2 text-gray-400"></i><p>Nenhuma ONG cadastrada ainda.</p></div>`;
-    return;
+    
+    querySnapshot.forEach((doc) => {
+      const ong = { id: doc.id, ...doc.data() };
+      const ongElement = createOngElement(ong);
+      container.appendChild(ongElement);
+    });
+    
+  } catch (error) {
+    toast('Erro ao carregar ONGs: ' + error.message,'error');
   }
-  
-  // Aplicar filtros
-  const searchTerm = document.getElementById('ongsSearchInput').value.toLowerCase();
-  const categoryFilter = document.getElementById('ongsCategory').value;
-  
-  const filteredOngs = allOngs.filter(ong => {
-    const matchesSearch = ong.nome.toLowerCase().includes(searchTerm) || 
-                         ong.desc.toLowerCase().includes(searchTerm) ||
-                         ong.local.toLowerCase().includes(searchTerm);
-    const matchesCategory = categoryFilter === 'all' || ong.category === categoryFilter;
-    return matchesSearch && matchesCategory;
-  });
-  
-  if(filteredOngs.length === 0){
-    container.innerHTML = `<div class="bg-white p-6 rounded-2xl shadow text-gray-600 text-center"><i class="fas fa-building text-3xl mb-2 text-gray-400"></i><p>Nenhuma ONG encontrada com os filtros aplicados.</p></div>`;
-    return;
-  }
-  
-  filteredOngs.forEach(ong => {
-    const card = document.createElement('div');
-    card.className = 'bg-white p-4 rounded-2xl shadow-lg border border-gray-100';
-    const photosHtml = (ong.photos||[]).slice(0,4).map(src => `<img src="${src}" class="w-20 h-20 object-cover rounded-lg mr-2 shadow">`).join('');
-    const eventsHtml = (ong.events||[]).map(ev => `<div class="bg-gray-100 p-2 rounded-lg mb-1"><strong>${escapeHtml(ev.title)}</strong> • ${escapeHtml(ev.date)}<div class="text-xs text-gray-500">${escapeHtml(ev.desc)}</div></div>`).join('') || '<div class="text-gray-500 text-sm text-center py-2"><i class="fas fa-calendar-times"></i> Nenhum evento</div>';
+}
 
-    card.innerHTML = `
-      <div class="flex justify-between items-start">
-        <div>
-          <h3 class="font-semibold flex items-center">${escapeHtml(ong.nome)} ${ong.verified ? '<span class="verified-badge"><i class="fas fa-check"></i></span>' : ''}</h3>
-          <div class="text-sm text-gray-500"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(ong.local)} • ${escapeHtml(ong.category||'Outros')}</div>
-          <div class="text-xs text-gray-400 mt-1">por ${escapeHtml(ong.owner.name)}</div>
-        </div>
-        <div class="flex gap-2">
-          <button class="bg-[#4f8bc9] text-white px-3 py-1 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-1" onclick="startConversation('${ong.owner.user}')">
-            <i class="fas fa-comment"></i> Contatar
-          </button>
+function createOngElement(ong){
+  const card = document.createElement('div');
+  card.className = 'bg-white p-4 rounded-2xl shadow-lg border border-gray-100';
+  
+  card.innerHTML = `
+    <div class="flex justify-between items-start">
+      <div>
+        <h3 class="font-semibold flex items-center">${escapeHtml(ong.nome)} 
+          ${ong.verificado ? '<span class="verified-badge"><i class="fas fa-check"></i></span>' : ''}</h3>
+        <div class="text-sm text-gray-500">
+          <i class="fas fa-map-marker-alt"></i> ${escapeHtml(ong.localizacao)} • ${escapeHtml(ong.categoria)}
         </div>
       </div>
-      <p class="mt-3">${escapeHtml(ong.desc)}</p>
-      <div class="mt-3 flex overflow-x-auto pb-2">${photosHtml || '<div class="text-gray-400 text-center w-full py-4"><i class="fas fa-image"></i> Sem fotos</div>'}</div>
-      <div class="mt-3"><h4 class="font-semibold flex items-center gap-2"><i class="fas fa-calendar-day"></i> Eventos</h4>${eventsHtml}</div>
-    `;
-    container.appendChild(card);
-  });
+      <button class="bg-[#4f8bc9] text-white px-3 py-1 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-1" 
+        onclick="startConversation('${ong.usuarioDono}')">
+        <i class="fas fa-comment"></i> Contatar
+      </button>
+    </div>
+    <p class="mt-3">${escapeHtml(ong.descricao)}</p>
+  `;
+  
+  return card;
+}
+
+function openCreateOng(){
+  if(!CURRENT){ toast('Faça login para cadastrar ONG','warning'); return; }
+  toast('Funcionalidade em desenvolvimento','info');
+}
+
+function loadMyOngs(){
+  const container = document.getElementById('myOngsList');
+  container.innerHTML = `<div class="bg-white p-6 rounded-2xl shadow text-gray-600 text-center">
+    <i class="fas fa-building text-3xl mb-2 text-gray-400"></i><p>Funcionalidade em desenvolvimento.</p></div>`;
 }
 
 function filterOngs() {
   loadOngsScreen();
 }
 
-/* ========= Minhas ONGs: create / edit / photos / events ========= */
-function openCreateOng(){
-  if(!CURRENT){ toast('Faça login para cadastrar ONG','warning'); return; }
-  // modal content
-  const modal = document.createElement('div');
-  modal.className = 'fixed inset-0 bg-black/40 flex items-center justify-center z-50';
-  modal.innerHTML = `
-    <div class="bg-white rounded-2xl p-6 w-[520px] max-w-[95%] shadow-lg border border-gray-100">
-      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2"><i class="fas fa-plus-circle text-[#3ba97c]"></i> Cadastrar ONG</h3>
-
-      <div class="space-y-3">
-        <div class="relative">
-          <i class="fas fa-building absolute left-3 top-3 text-gray-400"></i>
-          <input id="c_ongNome" placeholder="Nome da ONG" class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"/>
-        </div>
-        <div class="relative">
-          <i class="fas fa-align-left absolute left-3 top-3 text-gray-400"></i>
-          <textarea id="c_ongDesc" placeholder="Descrição (máx 300 caracteres)" maxlength="300" class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"></textarea>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div class="relative">
-            <i class="fas fa-map-marker-alt absolute left-3 top-3 text-gray-400"></i>
-            <input id="c_ongLocal" placeholder="Local / Cidade" class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"/>
-          </div>
-          <select id="c_ongCategory" class="border border-gray-200 p-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all">
-            <option value="roupa">Roupa e calçados</option>
-            <option value="criancas">Crianças carentes</option>
-            <option value="animais">Animais</option>
-            <option value="alimentos">Alimentos</option>
-            <option value="saude">Saúde</option>
-            <option value="educacao">Educação</option>
-            <option value="outros">Outros</option>
-          </select>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div class="relative">
-            <i class="fas fa-user absolute left-3 top-3 text-gray-400"></i>
-            <input id="c_respNome" placeholder="Nome do responsável" class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"/>
-          </div>
-          <div class="relative">
-            <i class="fas fa-id-card absolute left-3 top-3 text-gray-400"></i>
-            <input id="c_respCPF" placeholder="CPF do responsável (apenas dígitos)" class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"/>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div class="relative">
-            <i class="fas fa-phone absolute left-3 top-3 text-gray-400"></i>
-            <input id="c_phone" placeholder="Telefone" class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"/>
-          </div>
-          <div class="relative">
-            <i class="fas fa-envelope absolute left-3 top-3 text-gray-400"></i>
-            <input id="c_offEmail" placeholder="Email oficial" class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"/>
-          </div>
-        </div>
-
-        <div class="relative">
-          <i class="fas fa-file-alt absolute left-3 top-3 text-gray-400"></i>
-          <input id="c_doc" placeholder="CPF ou CNPJ (só dígitos)" class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"/>
-        </div>
-        <input id="c_photos" type="file" accept="image/*" multiple class="w-full border border-gray-200 p-2 rounded-lg" />
-      </div>
-
-      <div class="flex justify-end gap-2 mt-4">
-        <button id="c_cancel" class="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 transition-all flex items-center gap-2"><i class="fas fa-times"></i> Cancelar</button>
-        <button id="c_save" class="bg-[#3ba97c] text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-2"><i class="fas fa-check"></i> Cadastrar ONG</button>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(modal);
-
-  document.getElementById('c_cancel').onclick = ()=> modal.remove();
-  document.getElementById('c_save').onclick = async ()=>{
-    const nome = document.getElementById('c_ongNome').value.trim();
-    const desc = document.getElementById('c_ongDesc').value.trim();
-    const local = document.getElementById('c_ongLocal').value.trim();
-    const category = document.getElementById('c_ongCategory').value;
-    const respNome = document.getElementById('c_respNome').value.trim();
-    const respCPF = document.getElementById('c_respCPF').value.replace(/\D/g,'');
-    const phone = document.getElementById('c_phone').value.trim();
-    const offEmail = document.getElementById('c_offEmail').value.trim();
-    const doc = document.getElementById('c_doc').value.replace(/\D/g,'');
-    const files = [...document.getElementById('c_photos').files];
-
-    if(!nome || !desc || !local || !respNome || !respCPF || !phone || !offEmail || !doc){
-      toast('Preencha todos os campos obrigatórios','error'); return;
+async function startConversation(targetUser){
+  if(!CURRENT) return;
+  
+  try {
+    const usersQuery = query(collection(db, COLECOES.USUARIOS), where('usuario', '==', targetUser));
+    const userSnapshot = await getDocs(usersQuery);
+    
+    if(userSnapshot.empty){
+      toast('Usuário não encontrado','error'); return;
     }
     
-    // Validação simplificada para demonstração
-    if(respCPF.length !== 11){ toast('CPF do responsável deve ter 11 dígitos','error'); return; }
-    if(doc.length !== 11 && doc.length !== 14){ toast('Documento deve ter 11 (CPF) ou 14 (CNPJ) dígitos','error'); return; }
-
-    // Simular upload de fotos (em uma aplicação real, isso seria diferente)
-    const photos = [];
-    for (const file of files) {
-      photos.push(URL.createObjectURL(file));
+    const targetUserDoc = userSnapshot.docs[0];
+    const chatId = [CURRENT.id, targetUserDoc.id].sort().join('_');
+    
+    const chatRef = doc(db, COLECOES.CONVERSAS, chatId);
+    const chatDoc = await getDoc(chatRef);
+    
+    if(!chatDoc.exists()){
+      await setDoc(chatRef, {
+        participantes: [CURRENT.id, targetUserDoc.id],
+        mensagens: [],
+        ultimaMensagem: serverTimestamp(),
+        lida: false
+      });
     }
-
-    // add to current user ONGs
-    if(!CURRENT.ongs) CURRENT.ongs = [];
-    CURRENT.ongs.push({
-      id: 'o'+Date.now(),
-      nome, desc, local, category, respNome, respCPF, phone, offEmail, doc, photos, events:[],
-      verified: false // Inicialmente não verificada
-    });
-    // persist: update USERS array and storage
-    const idx = USERS.findIndex(u=>u.email === CURRENT.email);
-    if(idx >= 0) { USERS[idx] = CURRENT; saveToStorage('red_users', USERS); }
-    saveToStorage('red_current', CURRENT);
-    modal.remove();
-    toast('ONG cadastrada com sucesso','success');
-    loadOngsScreen();
-    loadMyOngs();
-  };
-}
-
-function loadMyOngs(){
-  const container = document.getElementById('myOngsList');
-  container.innerHTML = '';
-  const ongs = (CURRENT && CURRENT.ongs) ? CURRENT.ongs : [];
-  if(ongs.length === 0){
-    container.innerHTML = `<div class="bg-white p-6 rounded-2xl shadow text-gray-600 text-center"><i class="fas fa-building text-3xl mb-2 text-gray-400"></i><p>Você ainda não cadastrou ONGs.</p></div>`;
-    return;
+    
+    navTo('chats');
+    selectChat(chatId, targetUserDoc.id);
+    
+  } catch (error) {
+    toast('Erro ao iniciar conversa: ' + error.message,'error');
   }
-  ongs.forEach((ong, idx) => {
-    const card = document.createElement('div');
-    card.className = 'bg-white p-4 rounded-2xl shadow-lg border border-gray-100';
-    const photosHtml = (ong.photos||[]).slice(0,4).map(src => `<img src="${src}" class="w-20 h-20 object-cover rounded-lg mr-2 shadow">`).join('');
-    const eventsHtml = (ong.events||[]).map(ev => `<div class="bg-gray-100 p-2 rounded-lg mb-1"><strong>${escapeHtml(ev.title)}</strong> • ${escapeHtml(ev.date)}<div class="text-xs text-gray-500">${escapeHtml(ev.desc)}</div></div>`).join('') || '<div class="text-gray-500 text-sm text-center py-2"><i class="fas fa-calendar-times"></i> Nenhum evento</div>';
-
-    card.innerHTML = `
-      <div class="flex justify-between items-start">
-        <div>
-          <h3 class="font-semibold flex items-center">${escapeHtml(ong.nome)} ${ong.verified ? '<span class="verified-badge"><i class="fas fa-check"></i></span>' : ''}</h3>
-          <div class="text-sm text-gray-500"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(ong.local)} • ${escapeHtml(ong.category||'Outros')}</div>
-        </div>
-        <div class="flex gap-2">
-          <button class="bg-[#4f8bc9] text-white px-3 py-1 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-1" onclick="editOng(${idx})"><i class="fas fa-edit"></i> Editar</button>
-          <button class="bg-[#3ba97c] text-white px-3 py-1 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-1" onclick="addOngPhotos(${idx})"><i class="fas fa-camera"></i> Fotos</button>
-          <button class="bg-[#f4c542] px-3 py-1 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-1" onclick="openCreateEvent(${idx})"><i class="fas fa-calendar-plus"></i> Evento</button>
-        </div>
-      </div>
-      <p class="mt-3">${escapeHtml(ong.desc)}</p>
-      <div class="mt-3 flex overflow-x-auto pb-2">${photosHtml || '<div class="text-gray-400 text-center w-full py-4"><i class="fas fa-image"></i> Sem fotos</div>'}</div>
-      <div class="mt-3"><h4 class="font-semibold flex items-center gap-2"><i class="fas fa-calendar-day"></i> Eventos</h4>${eventsHtml}</div>
-    `;
-    container.appendChild(card);
-  });
-}
-
-function editOng(index){
-  const ong = CURRENT.ongs[index];
-  const modal = document.createElement('div');
-  modal.className = 'fixed inset-0 bg-black/40 flex items-center justify-center z-50';
-  modal.innerHTML = `
-    <div class="bg-white rounded-2xl p-6 w-[520px] max-w-[95%] shadow-lg border border-gray-100">
-      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2"><i class="fas fa-edit text-[#4f8bc9]"></i> Editar ONG</h3>
-      <div class="relative mb-2">
-        <i class="fas fa-building absolute left-3 top-3 text-gray-400"></i>
-        <input id="e_ongNome" class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all" value="${escapeHtml(ong.nome)}"/>
-      </div>
-      <div class="relative mb-2">
-        <i class="fas fa-align-left absolute left-3 top-3 text-gray-400"></i>
-        <textarea id="e_ongDesc" class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all" maxlength="300">${escapeHtml(ong.desc)}</textarea>
-      </div>
-      <div class="grid grid-cols-2 gap-2">
-        <div class="relative">
-          <i class="fas fa-map-marker-alt absolute left-3 top-3 text-gray-400"></i>
-          <input id="e_ongLocal" class="border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all" value="${escapeHtml(ong.local)}"/>
-        </div>
-        <select id="e_ongCategory" class="border border-gray-200 p-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all">
-          <option value="roupa">Roupa e calçados</option>
-          <option value="criancas">Crianças carentes</option>
-          <option value="animais">Animais</option>
-          <option value="alimentos">Alimentos</option>
-          <option value="saude">Saúde</option>
-          <option value="educacao">Educação</option>
-          <option value="outros">Outros</option>
-        </select>
-      </div>
-      <div class="flex justify-end gap-2 mt-4">
-        <button id="e_cancel" class="bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300 transition-all flex items-center gap-2"><i class="fas fa-times"></i> Cancelar</button>
-        <button id="e_save" class="bg-[#4f8bc9] text-white px-3 py-1 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-2"><i class="fas fa-save"></i> Salvar</button>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(modal);
-  document.getElementById('e_ongCategory').value = ong.category || 'outros';
-  document.getElementById('e_cancel').onclick = ()=> modal.remove();
-  document.getElementById('e_save').onclick = ()=>{
-    ong.nome = document.getElementById('e_ongNome').value.trim();
-    ong.desc = document.getElementById('e_ongDesc').value.trim();
-    ong.local = document.getElementById('e_ongLocal').value.trim();
-    ong.category = document.getElementById('e_ongCategory').value;
-    CURRENT.ongs[index] = ong;
-    const idx = USERS.findIndex(u => u.email === CURRENT.email);
-    if(idx >=0) { USERS[idx] = CURRENT; saveToStorage('red_users', USERS); }
-    saveToStorage('red_current', CURRENT);
-    toast('ONG atualizada','success');
-    modal.remove();
-    loadMyOngs();
-    loadOngsScreen();
-  };
-}
-
-function addOngPhotos(index){
-  const ong = CURRENT.ongs[index];
-  const modal = document.createElement('div');
-  modal.className = 'fixed inset-0 bg-black/40 flex items-center justify-center z-50';
-  modal.innerHTML = `
-    <div class="bg-white rounded-2xl p-6 w-[420px] max-w-[95%] shadow-lg border border-gray-100">
-      <h3 class="text-lg font-semibold mb-3 flex items-center gap-2"><i class="fas fa-camera text-[#3ba97c]"></i> Adicionar fotos — ${escapeHtml(ong.nome)}</h3>
-      <input id="uph" type="file" accept="image/*" multiple class="mb-3 w-full border border-gray-200 p-2 rounded-lg"/>
-      <div class="flex justify-end gap-2">
-        <button id="uph_cancel" class="bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300 transition-all flex items-center gap-2"><i class="fas fa-times"></i> Cancelar</button>
-        <button id="uph_save" class="bg-[#3ba97c] text-white px-3 py-1 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-2"><i class="fas fa-save"></i> Salvar</button>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(modal);
-  document.getElementById('uph_cancel').onclick = ()=> modal.remove();
-  document.getElementById('uph_save').onclick = async ()=>{
-    const files = [...document.getElementById('uph').files];
-    if(!files.length){ toast('Escolha ao menos uma foto','warning'); return; }
-    const urls = [];
-    for (const file of files) {
-      urls.push(URL.createObjectURL(file));
-    }
-    if(!ong.photos) ong.photos = [];
-    ong.photos.push(...urls);
-    const idx = USERS.findIndex(u => u.email === CURRENT.email);
-    if(idx >=0){ USERS[idx] = CURRENT; saveToStorage('red_users', USERS); }
-    saveToStorage('red_current', CURRENT);
-    modal.remove();
-    toast('Fotos adicionadas','success');
-    loadMyOngs();
-    loadOngsScreen();
-  };
-}
-
-/* create event for ONG */
-function openCreateEvent(index){
-  const ong = CURRENT.ongs[index];
-  const modal = document.createElement('div');
-  modal.className = 'fixed inset-0 bg-black/40 flex items-center justify-center z-50';
-  modal.innerHTML = `
-    <div class="bg-white rounded-2xl p-6 w-[420px] max-w-[95%] shadow-lg border border-gray-100">
-      <h3 class="text-lg font-semibold mb-3 flex items-center gap-2"><i class="fas fa-calendar-plus text-[#4f8bc9]"></i> Criar evento — ${escapeHtml(ong.nome)}</h3>
-      <div class="relative mb-2">
-        <i class="fas fa-heading absolute left-3 top-3 text-gray-400"></i>
-        <input id="ev_title" placeholder="Título" class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"/>
-      </div>
-      <div class="relative mb-2">
-        <i class="fas fa-align-left absolute left-3 top-3 text-gray-400"></i>
-        <textarea id="ev_desc" placeholder="Descrição (máx 200 chars)" maxlength="200" class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"></textarea>
-      </div>
-      <div class="relative mb-3">
-        <i class="fas fa-calendar-day absolute left-3 top-3 text-gray-400"></i>
-        <input id="ev_date" type="date" class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"/>
-      </div>
-      <div class="flex justify-end gap-2">
-        <button id="ev_cancel" class="bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300 transition-all flex items-center gap-2"><i class="fas fa-times"></i> Cancelar</button>
-        <button id="ev_save" class="bg-[#4f8bc9] text-white px-3 py-1 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-2"><i class="fas fa-check"></i> Salvar</button>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(modal);
-  document.getElementById('ev_cancel').onclick = ()=> modal.remove();
-  document.getElementById('ev_save').onclick = ()=>{
-    const title = document.getElementById('ev_title').value.trim();
-    const desc = document.getElementById('ev_desc').value.trim();
-    const date = document.getElementById('ev_date').value;
-    if(!title || !desc || !date){ toast('Preencha todos os campos do evento','error'); return; }
-    if(!ong.events) ong.events = [];
-    ong.events.push({title, desc, date});
-    const idx = USERS.findIndex(u=>u.email === CURRENT.email);
-    if(idx>=0){ USERS[idx] = CURRENT; saveToStorage('red_users', USERS); }
-    saveToStorage('red_current', CURRENT);
-    modal.remove();
-    toast('Evento criado','success');
-    loadMyOngs();
-    loadOngsScreen();
-  };
-}
-
-/* ========= Chats - DESIGN MELHORADO ========= */
-function startConversation(targetUser){
-  if(!CURRENT){ toast('Faça login para conversar','warning'); return; }
-  if(targetUser === CURRENT.user){ toast('Não é possível conversar consigo mesmo','warning'); return; }
-  
-  // Verificar se o usuário alvo existe
-  const targetUserObj = USERS.find(u => u.user === targetUser);
-  if(!targetUserObj){ toast('Usuário não encontrado','error'); return; }
-  
-  // Criar ID único para a conversa (ordem alfabética para garantir que seja o mesmo para ambos)
-  const chatId = [CURRENT.user, targetUser].sort().join('_');
-  
-  // Inicializar a conversa se não existir
-  if(!CHATS[chatId]) {
-    CHATS[chatId] = {
-      participants: [CURRENT.user, targetUser],
-      messages: [],
-      lastMessageAt: new Date().toISOString()
-    };
-    saveToStorage('red_chats', CHATS);
-  }
-  
-  navTo('chats');
-  selectChat(chatId, targetUser);
 }
 
 function renderChatList(){
   const list = document.getElementById('chatList');
-  list.innerHTML = '';
-  
-  if(!CURRENT || !CHATS) return;
-  
-  // Encontrar todas as conversas do usuário atual
-  const userChats = Object.entries(CHATS)
-    .filter(([id, chat]) => chat.participants.includes(CURRENT.user))
-    .sort((a, b) => new Date(b[1].lastMessageAt) - new Date(a[1].lastMessageAt));
-  
-  if(userChats.length === 0) {
-    list.innerHTML = '<div class="text-gray-500 text-center p-4"><i class="fas fa-comments text-2xl mb-2 text-gray-400"></i><p>Nenhuma conversa iniciada</p></div>';
-    return;
-  }
-  
-  userChats.forEach(([chatId, chat]) => {
-    // Encontrar o outro participante
-    const otherUser = chat.participants.find(u => u !== CURRENT.user);
-    const otherUserObj = USERS.find(u => u.user === otherUser);
-    const lastMessage = chat.messages[chat.messages.length - 1];
-    const unreadCount = chat.messages.filter(m => 
-      m.sender !== CURRENT.user && !m.read).length;
-    
-    // Definir o badge correto
-    let badge = '';
-    if (otherUserObj && otherUserObj.isOwner) {
-      badge = '<span class="gold-badge"><i class="fas fa-crown"></i></span>';
-    } else if (otherUserObj && otherUserObj.verified) {
-      badge = '<span class="verified-badge"><i class="fas fa-check"></i></span>';
-    }
-    
-    const el = document.createElement('div');
-    el.className = `chat-item p-3 rounded-lg cursor-pointer flex items-center gap-3 ${unreadCount > 0 ? 'unread' : ''} ${SELECTED_CHAT_ID === chatId ? 'active' : ''}`;
-    el.innerHTML = `
-      <img src="${otherUserObj?.profilePic || ('https://ui-avatars.com/api/?name='+encodeURIComponent(otherUser)+'&background=4f8bc9&color=fff')}" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow"/>
-      <div class="flex-1 min-w-0">
-        <div class="font-semibold truncate flex items-center">${escapeHtml(otherUserObj?.name || otherUser)} ${badge}</div>
-        <div class="text-xs text-gray-500 truncate">${lastMessage ? escapeHtml(lastMessage.text) : 'Nenhuma mensagem'}</div>
-      </div>
-      <div class="flex flex-col items-end">
-        <div class="text-xs text-gray-400 whitespace-nowrap">
-          ${lastMessage ? formatTimeAgo(lastMessage.timestamp) : ''}
-        </div>
-        ${unreadCount > 0 ? `<span class="bg-[#3ba97c] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center mt-1">${unreadCount}</span>` : ''}
-      </div>
-    `;
-    el.onclick = () => selectChat(chatId, otherUser);
-    list.appendChild(el);
-  });
+  list.innerHTML = '<div class="text-gray-500 text-center p-4"><i class="fas fa-comments text-2xl mb-2 text-gray-400"></i><p>Funcionalidade em desenvolvimento</p></div>';
 }
-
-function filterChats(searchTerm) {
-  const list = document.getElementById('chatList');
-  const items = list.querySelectorAll('.chat-item');
-  
-  items.forEach(item => {
-    const userName = item.querySelector('.font-semibold').textContent.toLowerCase();
-    if (userName.includes(searchTerm.toLowerCase())) {
-      item.style.display = 'flex';
-    } else {
-      item.style.display = 'none';
-    }
-  });
-}
-
-let SELECTED_CHAT_ID = null;
-let SELECTED_CHAT_USER = null;
 
 function selectChat(chatId, otherUser){
-  SELECTED_CHAT_ID = chatId;
-  SELECTED_CHAT_USER = otherUser;
-  
-  // Atualizar a lista para destacar a conversa selecionada
-  renderChatList();
-  
-  const otherUserObj = USERS.find(u => u.user === otherUser);
-  document.getElementById('chatWithUser').innerText = otherUserObj?.name || otherUser;
-  document.getElementById('chatStatus').innerHTML = `<i class="fas fa-circle text-green-500"></i> Online`;
-  
-  renderMessages(chatId);
-  
-  // Marcar mensagens como lidas e atualizar notificações
-  markMessagesAsRead(chatId);
-}
-
-function renderMessages(chatId){
-  const box = document.getElementById('chatWindow');
-  box.innerHTML = '';
-  
-  if(!CHATS[chatId] || CHATS[chatId].messages.length === 0) {
-    box.innerHTML = '<div class="text-gray-500 text-center p-4"><i class="fas fa-comment-slash text-3xl mb-2 text-gray-400"></i><p>Nenhuma mensagem ainda. Envie uma mensagem para iniciar a conversa.</p></div>';
-    return;
-  }
-  
-  CHATS[chatId].messages.forEach((m, index) => {
-    const isSelf = m.sender === CURRENT.user;
-    const messageTime = new Date(m.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-    const showOptions = true; // Todos podem responder
-    
-    const div = document.createElement('div');
-    div.className = `chat-bubble ${isSelf ? 'self' : 'other'} ${REPLYING_TO === index ? 'replying' : ''}`;
-    
-    let messageContent = '';
-    if (m.replyTo !== undefined && m.replyTo !== null) {
-      const repliedMessage = CHATS[chatId].messages[m.replyTo];
-      if (repliedMessage) {
-        const replySender = repliedMessage.sender === CURRENT.user ? 'Você' : repliedMessage.sender;
-        messageContent += `<div class="chat-reply"><i class="fas fa-reply"></i> Em resposta a ${replySender}: ${escapeHtml(repliedMessage.text)}</div>`;
-      }
-    }
-    
-    messageContent += `<div>${escapeHtml(m.text)}</div>`;
-    messageContent += `<span class="chat-time"><i class="far fa-clock"></i> ${messageTime}</span>`;
-    
-    if (showOptions) {
-      messageContent += `
-        <div class="message-options">
-          <button class="text-xs text-gray-500 hover:text-gray-700 transition-all" onclick="replyToMessage(${index})" title="Responder"><i class="fas fa-reply"></i></button>
-        </div>
-      `;
-    }
-    
-    div.innerHTML = messageContent;
-    box.appendChild(div);
-  });
-  
-  box.scrollTop = box.scrollHeight;
-}
-
-function replyToMessage(messageIndex) {
-  if (!SELECTED_CHAT_ID) return;
-  
-  const message = CHATS[SELECTED_CHAT_ID].messages[messageIndex];
-  REPLYING_TO = messageIndex;
-  
-  // Mostrar indicador de resposta
-  const replyIndicator = document.getElementById('replyIndicator');
-  const replyText = document.getElementById('replyText');
-  
-  replyText.innerText = message.text.length > 50 ? message.text.substring(0, 50) + '...' : message.text;
-  replyIndicator.classList.remove('hidden');
-  
-  // Destacar a mensagem sendo respondida
-  renderMessages(SELECTED_CHAT_ID);
-  
-  // Focar no campo de mensagem
-  document.getElementById('chatMsg').focus();
-}
-
-function cancelReply() {
-  REPLYING_TO = null;
-  document.getElementById('replyIndicator').classList.add('hidden');
-  renderMessages(SELECTED_CHAT_ID);
+  toast('Funcionalidade em desenvolvimento','info');
 }
 
 function sendChat(){
-  const txt = document.getElementById('chatMsg').value.trim();
-  if(!SELECTED_CHAT_ID || !SELECTED_CHAT_USER){ toast('Selecione uma conversa','warning'); return; }
-  if(!txt) return;
-  
-  // Criar mensagem
-  const newMessage = {
-    sender: CURRENT.user,
-    text: txt,
-    timestamp: new Date().toISOString(),
-    read: false,
-    replyTo: REPLYING_TO
-  };
-  
-  // Adicionar à conversa
-  CHATS[SELECTED_CHAT_ID].messages.push(newMessage);
-  CHATS[SELECTED_CHAT_ID].lastMessageAt = new Date().toISOString();
-  
-  // Salvar no armazenamento
-  saveToStorage('red_chats', CHATS);
-  
-  // Limpar e atualizar a interface
-  document.getElementById('chatMsg').value = '';
-  cancelReply();
-  renderMessages(SELECTED_CHAT_ID);
-  
-  // Notificar o usuário
-  toast('Mensagem enviada', 'success');
-}
-
-function markMessagesAsRead(chatId){
-  if(!CHATS[chatId]) return;
-  
-  let updated = false;
-  CHATS[chatId].messages.forEach(m => {
-    if(m.sender !== CURRENT.user && !m.read) {
-      m.read = true;
-      updated = true;
-    }
-  });
-  
-  if(updated) {
-    saveToStorage('red_chats', CHATS);
-    checkUnreadMessages();
-  }
+  toast('Funcionalidade em desenvolvimento','info');
 }
 
 function checkUnreadMessages(){
-  if(!CURRENT || !CHATS) return;
-  
-  let totalUnread = 0;
-  Object.values(CHATS).forEach(chat => {
-    if(chat.participants.includes(CURRENT.user)) {
-      totalUnread += chat.messages.filter(m => 
-        m.sender !== CURRENT.user && !m.read).length;
-    }
-  });
-  
-  // Atualizar indicadores de notificação
-  const chatNotification = document.getElementById('chat-notification');
-  const mobileChatNotification = document.getElementById('mobile-chat-notification');
-  
-  if(totalUnread > 0) {
-    chatNotification.classList.remove('hidden');
-    mobileChatNotification.classList.remove('hidden');
-    chatNotification.innerText = totalUnread > 9 ? '9+' : totalUnread;
-  } else {
-    chatNotification.classList.add('hidden');
-    mobileChatNotification.classList.add('hidden');
-  }
 }
 
-function formatTimeAgo(timestamp) {
-  const now = new Date();
-  const messageTime = new Date(timestamp);
-  const diffInMinutes = Math.floor((now - messageTime) / (1000 * 60));
-  
-  if (diffInMinutes < 1) return 'Agora';
-  if (diffInMinutes < 60) return `${diffInMinutes} min`;
-  if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)} h`;
-  return `${Math.floor(diffInMinutes / 1440)} dias`;
-}
-
-/* ========= Account/profile ========= */
-function loadAccount(){
+async function loadAccount(){
   if(!CURRENT) return;
-  // preview
-  document.getElementById('profilePreview').src = CURRENT.profilePic || (`https://ui-avatars.com/api/?name=${encodeURIComponent(CURRENT.name)}&background=4f8bc9&color=fff`);
+  
+  document.getElementById('profilePreview').src = CURRENT.profilePic || 
+    `https://ui-avatars.com/api/?name=${encodeURIComponent(CURRENT.name)}&background=4f8bc9&color=fff`;
   document.getElementById('accountName').value = CURRENT.name || '';
   document.getElementById('accountUser').value = CURRENT.user || '';
   document.getElementById('accountBio').value = CURRENT.bio || '';
-  // mini ONGs
-  const mini = document.getElementById('miniOngs');
-  mini.innerHTML = '';
-  (CURRENT.ongs||[]).forEach((o, idx)=>{
-    const el = document.createElement('div');
-    el.className = 'flex items-center justify-between bg-slate-50 p-2 rounded-lg';
-    el.innerHTML = `<div><div class="font-semibold flex items-center">${escapeHtml(o.nome)} ${o.verified ? '<span class="verified-badge"><i class="fas fa-check"></i></span>' : ''}</div><div class="text-xs text-gray-500"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(o.local)}</div></div><div class="flex gap-2"><button class="bg-[#4f8bc9] text-white px-2 py-1 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-1" onclick="editOng(${idx})"><i class="fas fa-edit"></i></button><button class="bg-[#3ba97c] text-white px-2 py-1 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-1" onclick="addOngPhotos(${idx})"><i class="fas fa-camera"></i></button></div>`;
-    mini.appendChild(el);
-  });
-
-  // profile pic change handler
+  
   document.getElementById('profilePicInput').onchange = function(){
     const f = this.files[0];
     if(!f) return;
@@ -2131,23 +1587,48 @@ function loadAccount(){
   };
 }
 
-function saveAccount(){
+async function saveAccount(){
   const name = document.getElementById('accountName').value.trim();
   const user = document.getElementById('accountUser').value.trim();
   const bio = document.getElementById('accountBio').value.trim();
+  
   if(!name || !user){ toast('Nome e @username são obrigatórios','error'); return; }
-  // check unique username among others
-  if(USERS.some(u => u.user === user && u.email !== CURRENT.email)){ toast('@username já ocupado','error'); return; }
-  CURRENT.name = name; CURRENT.user = user; CURRENT.bio = bio;
-  saveCurrentUser();
-  toast('Perfil salvo','success');
-  // update composer/header
-  document.getElementById('composerAvatar').src = CURRENT.profilePic || (`https://ui-avatars.com/api/?name=${encodeURIComponent(CURRENT.name)}&background=4f8bc9&color=fff`);
-  document.getElementById('headerAvatar').src = CURRENT.profilePic || (`https://ui-avatars.com/api/?name=${encodeURIComponent(CURRENT.name)}&background=4f8bc9&color=fff`);
-  document.getElementById('headerName').innerText = CURRENT.name;
+  
+  try {
+    if (user !== CURRENT.user) {
+      const usersQuery = query(collection(db, COLECOES.USUARIOS), where('usuario', '==', user));
+      const userSnapshot = await getDocs(usersQuery);
+      if (!userSnapshot.empty) {
+        throw new Error('@username já ocupado');
+      }
+    }
+    
+    const userRef = doc(db, COLECOES.USUARIOS, CURRENT.id);
+    await updateDoc(userRef, {
+      nome: name,
+      usuario: user,
+      bio: bio,
+      fotoPerfil: CURRENT.profilePic || ''
+    });
+    
+    CURRENT.name = name;
+    CURRENT.user = user;
+    CURRENT.bio = bio;
+    saveCurrentUser();
+    
+    toast('Perfil salvo','success');
+    
+    document.getElementById('composerAvatar').src = CURRENT.profilePic || 
+      `https://ui-avatars.com/api/?name=${encodeURIComponent(CURRENT.name)}&background=4f8bc9&color=fff`;
+    document.getElementById('headerAvatar').src = CURRENT.profilePic || 
+      `https://ui-avatars.com/api/?name=${encodeURIComponent(CURRENT.name)}&background=4f8bc9&color=fff`;
+    document.getElementById('headerName').innerText = CURRENT.name;
+    
+  } catch (error) {
+    toast(error.message,'error');
+  }
 }
 
-/* ========= Admin Panel ========= */
 function loadAdminPanel() {
   if (!CURRENT || !CURRENT.isDeveloper) {
     toast('Acesso restrito a administradores', 'error');
@@ -2155,274 +1636,11 @@ function loadAdminPanel() {
     return;
   }
   
-  // Inicializar tabs
-  initAdminTabs();
-  
-  // Carregar conteúdo inicial (pendentes)
-  loadUserVerificationList();
-  loadOngVerificationList();
+  toast('Painel administrativo em desenvolvimento','info');
 }
 
-function initAdminTabs() {
-  const tabButtons = document.querySelectorAll('.tab-button');
-  const tabPanels = document.querySelectorAll('.tab-panel');
-  
-  tabButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const tabName = button.getAttribute('data-tab');
-      
-      // Ativar botão
-      tabButtons.forEach(btn => btn.classList.remove('active'));
-      button.classList.add('active');
-      
-      // Mostrar painel correspondente
-      tabPanels.forEach(panel => panel.classList.add('hidden'));
-      document.getElementById(`tab-${tabName}`).classList.remove('hidden');
-      
-      // Carregar conteúdo específico da tab
-      if (tabName === 'verified') {
-        loadVerifiedUsersList();
-        loadVerifiedOngsList();
-      } else if (tabName === 'stats') {
-        updateAdminStats();
-      } else if (tabName === 'pending') {
-        loadUserVerificationList();
-        loadOngVerificationList();
-      }
-    });
-  });
-}
-
-function updateAdminStats() {
-  const totalUsers = USERS.length;
-  const totalOngs = USERS.reduce((acc, user) => acc + (user.ongs ? user.ongs.length : 0), 0);
-  const totalPosts = FEED.length;
-  const totalVerified = USERS.filter(u => u.verified).length + 
-                       USERS.reduce((acc, user) => acc + (user.ongs ? user.ongs.filter(o => o.verified).length : 0), 0);
-  
-  document.getElementById('stats-users').textContent = totalUsers;
-  document.getElementById('stats-ongs').textContent = totalOngs;
-  document.getElementById('stats-posts').textContent = totalPosts;
-  document.getElementById('stats-verified').textContent = totalVerified;
-}
-
-function loadUserVerificationList() {
-  const container = document.getElementById('userVerificationList');
-  container.innerHTML = '';
-  
-  // Filtrar usuários não verificados (exceto administradores)
-  const usersToVerify = USERS.filter(u => !u.verified && !u.isDeveloper);
-  
-  if (usersToVerify.length === 0) {
-    container.innerHTML = '<div class="text-gray-500 text-center p-4"><i class="fas fa-user-check text-2xl mb-2 text-gray-400"></i><p>Todos os usuários estão verificados</p></div>';
-    return;
-  }
-  
-  usersToVerify.forEach(user => {
-    const el = document.createElement('div');
-    el.className = 'bg-white p-3 rounded-lg shadow border border-gray-100';
-    el.innerHTML = `
-      <div class="flex justify-between items-center mb-2">
-        <div class="font-semibold flex items-center">${escapeHtml(user.name)}</div>
-        <div class="text-xs text-gray-500">@${escapeHtml(user.user)}</div>
-      </div>
-      <div class="text-sm text-gray-600 mb-2">${escapeHtml(user.bio || 'Sem biografia')}</div>
-      <div class="flex justify-end gap-2">
-        <button class="bg-green-500 text-white px-2 py-1 rounded text-xs hover:bg-green-600 transition-all" onclick="verifyUser('${user.id}', true)">
-          <i class="fas fa-check"></i> Verificar
-        </button>
-        <button class="bg-gray-500 text-white px-2 py-1 rounded text-xs hover:bg-gray-600 transition-all" onclick="verifyUser('${user.id}', false)">
-          <i class="fas fa-ban"></i> Rejeitar
-        </button>
-      </div>
-    `;
-    container.appendChild(el);
-  });
-}
-
-function loadOngVerificationList() {
-  const container = document.getElementById('ongVerificationList');
-  container.innerHTML = '';
-  
-  // Coletar todas as ONGs não verificadas de todos os usuários
-  let ongsToVerify = [];
-  USERS.forEach(user => {
-    if (user.ongs) {
-      user.ongs.forEach(ong => {
-        if (!ong.verified) {
-          ongsToVerify.push({ ...ong, owner: user });
-        }
-      });
-    }
-  });
-  
-  if (ongsToVerify.length === 0) {
-    container.innerHTML = '<div class="text-gray-500 text-center p-4"><i class="fas fa-building text-2xl mb-2 text-gray-400"></i><p>Todas as ONGs estão verificadas</p></div>';
-    return;
-  }
-  
-  ongsToVerify.forEach(ong => {
-    const el = document.createElement('div');
-    el.className = 'bg-white p-3 rounded-lg shadow border border-gray-100';
-    el.innerHTML = `
-      <div class="flex justify-between items-center mb-2">
-        <div class="font-semibold">${escapeHtml(ong.nome)}</div>
-        <div class="text-xs text-gray-500">por @${escapeHtml(ong.owner.user)}</div>
-      </div>
-      <div class="text-sm text-gray-600 mb-2">${escapeHtml(ong.desc)}</div>
-      <div class="text-xs text-gray-500 mb-2"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(ong.local)} • ${escapeHtml(ong.category)}</div>
-      <div class="flex justify-end gap-2">
-        <button class="bg-green-500 text-white px-2 py-1 rounded text-xs hover:bg-green-600 transition-all" onclick="verifyOng('${ong.owner.id}', '${ong.id}', true)">
-          <i class="fas fa-check"></i> Verificar
-        </button>
-        <button class="bg-gray-500 text-white px-2 py-1 rounded text-xs hover:bg-gray-600 transition-all" onclick="verifyOng('${ong.owner.id}', '${ong.id}', false)">
-          <i class="fas fa-ban"></i> Rejeitar
-        </button>
-      </div>
-    `;
-    container.appendChild(el);
-  });
-}
-
-function loadVerifiedUsersList() {
-  const container = document.getElementById('verifiedUsersList');
-  container.innerHTML = '';
-  
-  // Filtrar usuários verificados
-  const verifiedUsers = USERS.filter(u => u.verified && !u.isOwner);
-  
-  if (verifiedUsers.length === 0) {
-    container.innerHTML = '<div class="text-gray-500 text-center p-4"><i class="fas fa-user text-2xl mb-2 text-gray-400"></i><p>Nenhum usuário verificado</p></div>';
-    return;
-  }
-  
-  verifiedUsers.forEach(user => {
-    const el = document.createElement('div');
-    el.className = 'bg-white p-3 rounded-lg shadow border border-gray-100';
-    el.innerHTML = `
-      <div class="flex justify-between items-center mb-2">
-        <div class="font-semibold flex items-center">${escapeHtml(user.name)} <span class="verified-badge"><i class="fas fa-check"></i></span></div>
-        <div class="text-xs text-gray-500">@${escapeHtml(user.user)}</div>
-      </div>
-      <div class="text-sm text-gray-600 mb-2">${escapeHtml(user.bio || 'Sem biografia')}</div>
-      <div class="flex justify-end gap-2">
-        <button class="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600 transition-all" onclick="verifyUser('${user.id}', false)">
-          <i class="fas fa-times"></i> Remover Verificação
-        </button>
-      </div>
-    `;
-    container.appendChild(el);
-  });
-}
-
-function loadVerifiedOngsList() {
-  const container = document.getElementById('verifiedOngsList');
-  container.innerHTML = '';
-  
-  // Coletar todas as ONGs verificadas de todos os usuários
-  let verifiedOngs = [];
-  USERS.forEach(user => {
-    if (user.ongs) {
-      user.ongs.forEach(ong => {
-        if (ong.verified) {
-          verifiedOngs.push({ ...ong, owner: user });
-        }
-      });
-    }
-  });
-  
-  if (verifiedOngs.length === 0) {
-    container.innerHTML = '<div class="text-gray-500 text-center p-4"><i class="fas fa-building text-2xl mb-2 text-gray-400"></i><p>Nenhuma ONG verificada</p></div>';
-    return;
-  }
-  
-  verifiedOngs.forEach(ong => {
-    const el = document.createElement('div');
-    el.className = 'bg-white p-3 rounded-lg shadow border border-gray-100';
-    el.innerHTML = `
-      <div class="flex justify-between items-center mb-2">
-        <div class="font-semibold flex items-center">${escapeHtml(ong.nome)} <span class="verified-badge"><i class="fas fa-check"></i></span></div>
-        <div class="text-xs text-gray-500">por @${escapeHtml(ong.owner.user)}</div>
-      </div>
-      <div class="text-sm text-gray-600 mb-2">${escapeHtml(ong.desc)}</div>
-      <div class="text-xs text-gray-500 mb-2"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(ong.local)} • ${escapeHtml(ong.category)}</div>
-      <div class="flex justify-end gap-2">
-        <button class="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600 transition-all" onclick="verifyOng('${ong.owner.id}', '${ong.id}', false)">
-          <i class="fas fa-times"></i> Remover Verificação
-        </button>
-      </div>
-    `;
-    container.appendChild(el);
-  });
-}
-
-function verifyUser(userId, verify) {
-  const user = USERS.find(u => u.id === userId);
-  if (!user) {
-    toast('Usuário não encontrado', 'error');
-    return;
-  }
-  
-  user.verified = verify;
-  saveToStorage('red_users', USERS);
-  
-  // Atualizar também no feed se o usuário tiver posts
-  FEED.forEach(post => {
-    if (post.authorUser === user.user) {
-      post.verified = verify;
-    }
-  });
-  saveToStorage('red_feed', FEED);
-  
-  toast(`Usuário ${verify ? 'verificado' : 'removido da verificação'} com sucesso`, 'success');
-  
-  // Recarregar as listas apropriadas
-  if (verify) {
-    loadUserVerificationList();
-    loadVerifiedUsersList();
-  } else {
-    loadVerifiedUsersList();
-    loadUserVerificationList();
-  }
-  
-  updateAdminStats();
-}
-
-function verifyOng(ownerId, ongId, verify) {
-  const user = USERS.find(u => u.id === ownerId);
-  if (!user || !user.ongs) {
-    toast('ONG não encontrada', 'error');
-    return;
-  }
-  
-  const ong = user.ongs.find(o => o.id === ongId);
-  if (!ong) {
-    toast('ONG não encontrada', 'error');
-    return;
-  }
-  
-  ong.verified = verify;
-  saveToStorage('red_users', USERS);
-  
-  toast(`ONG ${verify ? 'verificada' : 'removida da verificação'} com sucesso`, 'success');
-  
-  // Recarregar as listas apropriadas
-  if (verify) {
-    loadOngVerificationList();
-    loadVerifiedOngsList();
-  } else {
-    loadVerifiedOngsList();
-    loadOngVerificationList();
-  }
-  
-  updateAdminStats();
-}
-
-/* ========= Helpers ========= */
 function saveCurrentUser(){
   saveToStorage('red_current', CURRENT);
-  const i = USERS.findIndex(u => u.email === CURRENT.email);
-  if(i>=0) { USERS[i] = CURRENT; saveToStorage('red_users', USERS); }
 }
 
 function escapeHtml(str){ 
@@ -2447,7 +1665,6 @@ function highlightEmptyFields(fieldIds) {
   });
 }
 
-// Remover classes de erro quando o usuário começar a digitar
 document.addEventListener('DOMContentLoaded', function() {
   const inputs = document.querySelectorAll('input');
   inputs.forEach(input => {
@@ -2456,14 +1673,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Permitir login com a tecla Enter
   document.getElementById('loginPass').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
       doLogin();
     }
   });
   
-  // Fechar modal ao pressionar ESC
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       document.getElementById('imageModal').style.display = 'none';
@@ -2471,57 +1686,56 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-/* ========= Persist / restore feed and users on load ========= */
-window.addEventListener('load', ()=>{
-  // load everything from storage
-  USERS = loadFromStorage('red_users', []);
-  FEED = loadFromStorage('red_feed', []);
-  CURRENT = loadFromStorage('red_current', null);
-  CHATS = loadFromStorage('red_chats', {});
-  
-  // Criar conta de desenvolvedor se não existir
-  createDeveloperAccount();
-  
-  if(!FEED || FEED.length === 0){
-    // seed sample posts
-    FEED = [
-      {id:'p1', authorName:'ONG Esperança', authorUser:'ongesperanca', authorPic:'', text:'Arrecadação de alimentos neste sábado. Ajude!', likes:[], comments:[], created:new Date().toISOString(), verified: true},
-      {id:'p2', authorName:'ONG Futuro Melhor', authorUser:'futuromelhor', authorPic:'', text:'Campanha de material escolar — precisamos de voluntários.', likes:[], comments:[], created:new Date().toISOString(), verified: false}
-    ];
-    saveToStorage('red_feed', FEED);
-  }
-  
-  // If there is a logged user, show app
-  if(CURRENT){
-    // sync with USERS array in case it was updated
-    const f = USERS.find(u=>u.email === CURRENT.email) || USERS.find(u=>u.user === CURRENT.user);
-    if(f) CURRENT = f;
-    document.getElementById('screen-auth').classList.add('hidden');
-    document.getElementById('screen-app').classList.remove('hidden');
-    document.getElementById('composerAvatar').src = CURRENT.profilePic || (`https://ui-avatars.com/api/?name=${encodeURIComponent(CURRENT.name)}&background=4f8bc9&color=fff`);
-    
-    // Mostrar botão admin apenas para desenvolvedor
-    if (CURRENT.isDeveloper) {
-      document.getElementById('navAdmin').classList.remove('hidden');
-      document.getElementById('mobile-navAdmin').classList.remove('hidden');
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    try {
+      const userDoc = await getDoc(doc(db, COLECOES.USUARIOS, user.uid));
+      if (userDoc.exists()) {
+        CURRENT = { id: user.uid, ...userDoc.data() };
+        
+        CURRENT.name = CURRENT.nome || '';
+        CURRENT.user = CURRENT.usuario || '';
+        CURRENT.email = CURRENT.email || '';
+        CURRENT.bio = CURRENT.bio || '';
+        CURRENT.profilePic = CURRENT.fotoPerfil || '';
+        CURRENT.ongs = CURRENT.ongs || [];
+        CURRENT.verified = CURRENT.verificado || false;
+        CURRENT.isDeveloper = CURRENT.isDeveloper || false;
+        
+        saveToStorage('red_current', CURRENT);
+        
+        document.getElementById('screen-auth').classList.add('hidden');
+        document.getElementById('screen-app').classList.remove('hidden');
+        
+        document.getElementById('composerAvatar').src = CURRENT.profilePic || 
+          `https://ui-avatars.com/api/?name=${encodeURIComponent(CURRENT.name)}&background=4f8bc9&color=fff`;
+        
+        document.getElementById('headerUser').classList.remove('hidden');
+        document.getElementById('headerAvatar').src = CURRENT.profilePic || 
+          `https://ui-avatars.com/api/?name=${encodeURIComponent(CURRENT.name)}&background=4f8bc9&color=fff`;
+        document.getElementById('headerName').innerText = CURRENT.name;
+        document.getElementById('btnLoginHeader').classList.add('hidden');
+        
+        if (CURRENT.isDeveloper) {
+          document.getElementById('navAdmin').classList.remove('hidden');
+          document.getElementById('mobile-navAdmin').classList.remove('hidden');
+        }
+        
+        checkUnreadMessages();
+        
+        navTo('feed');
+      }
+    } catch (error) {
+      console.error('Erro ao carregar usuário:', error);
     }
-    
-    document.getElementById('headerUser').classList.remove('hidden');
-    document.getElementById('headerAvatar').src = CURRENT.profilePic || (`https://ui-avatars.com/api/?name=${encodeURIComponent(CURRENT.name)}&background=4f8bc9&color=fff`);
-    document.getElementById('headerName').innerText = CURRENT.name;
-    document.getElementById('btnLoginHeader').classList.add('hidden');
-    
-    // Verificar mensagens não lidas
-    checkUnreadMessages();
-    navTo('feed');
   } else {
-    // show auth
+    CURRENT = null;
+    localStorage.removeItem('red_current');
     document.getElementById('screen-auth').classList.remove('hidden');
     document.getElementById('screen-app').classList.add('hidden');
   }
 });
 
-// Expor funções globalmente para os botões
 window.openLogin = openLogin;
 window.showRegister = showRegister;
 window.showLogin = showLogin;
@@ -2530,10 +1744,13 @@ window.doRegister = doRegister;
 window.doLogout = doLogout;
 window.navTo = navTo;
 window.createPost = createPost;
+window.likePost = likePost;
+window.startConversation = startConversation;
+window.loadOngsScreen = loadOngsScreen;
+window.loadAccount = loadAccount;
 window.openCreateOng = openCreateOng;
 window.sendChat = sendChat;
 window.saveAccount = saveAccount;
-window.startConversation = startConversation;
 window.replyToMessage = replyToMessage;
 window.cancelReply = cancelReply;
 window.verifyUser = verifyUser;
@@ -2542,29 +1759,6 @@ window.openImageModal = openImageModal;
 window.removeImage = removeImage;
 window.filterOngs = filterOngs;
 window.filterChats = filterChats;
-</script>
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyB_Ln_geOfvrqtr2BLZS6TM67FdHQpB3sQ",
-    authDomain: "redampara.firebaseapp.com",
-    projectId: "redampara",
-    storageBucket: "redampara.firebasestorage.app",
-    messagingSenderId: "998828444090",
-    appId: "1:998828444090:web:4ff18ffc2000b303d23583",
-    measurementId: "G-GSV8GE29BE"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
 </script>
 </body>
 </html>
