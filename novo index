@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Rede de Amparo - Criar Conta</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script>
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCkAj7wfzmOGPGs1mNTTX9RIx407LE-YmG",
+            authDomain: "bancodarede.firebaseapp.com",
+            projectId: "bancodarede",
+            storageBucket: "bancodarede.firebasestorage.app",
+            messagingSenderId: "991396357153",
+            appId: "1:991396357153:web:274401bc28fcd0a629ef60"
+        };
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        
+        // Função para criar conta
+        function criarConta() {
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            const mensagem = document.getElementById('mensagem');
+            
+            mensagem.innerHTML = "Criando conta...";
+            mensagem.style.color = "blue";
+            
+            firebase.auth().createUserWithEmailAndPassword(email, senha)
+                .then((user) => {
+                    mensagem.innerHTML = "✅ Conta criada com sucesso!";
+                    mensagem.style.color = "green";
+                    alert("🎉 Bem-vindo à Rede de Amparo!");
+                })
+                .catch((error) => {
+                    mensagem.innerHTML = "❌ Erro: " + error.message;
+                    mensagem.style.color = "red";
+                });
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>🔗 Rede de Amparo</h2>
+    <h3>Criar Nova Conta</h3>
+    
+    <input type="email" id="email" placeholder="Seu email" required>
+    <input type="password" id="senha" placeholder="Sua senha (mínimo 6 caracteres)" required>
+    <button onclick="criarConta()">Criar Minha Conta</button>
+    
+    <div id="mensagem" style="margin-top: 20px; font-weight: bold;"></div>
+    
+    <script>
+        console.log("🔥 Firebase carregado. Aguardando criar conta...");
+    </script>
+</body>
+</html>
