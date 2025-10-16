@@ -297,7 +297,6 @@
             cursor: pointer;
         }
 
-        /* Chat melhorado */
         .chat-bubble {
             max-width: 75%;
             padding: 12px 16px;
@@ -510,7 +509,6 @@
             font-weight: bold;
         }
         
-        /* Estilo para mensagens com imagem */
         .chat-image {
             max-width: 200px;
             border-radius: 12px;
@@ -518,7 +516,6 @@
             cursor: pointer;
         }
         
-        /* Estilo para pontos na loja */
         .points-discount {
             background: linear-gradient(135deg, #ffd700, #ffed4e);
             color: #8b5c00;
@@ -541,6 +538,37 @@
             align-items: center;
             gap: 8px;
         }
+        
+        .premium-post {
+            border: 2px solid #ffd700;
+            background: linear-gradient(135deg, #fff9e6, #fff3cc);
+        }
+        
+        .admin-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff6b6b, #e53e3e);
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            font-size: 10px;
+            margin-left: 4px;
+        }
+        
+        .dev-panel {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .dev-stats-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-green-50 text-gray-800 min-h-screen">
@@ -555,7 +583,6 @@
     <header class="sticky top-0 bg-white/80 backdrop-blur-sm border-b border-gray-200 z-30 shadow-sm">
         <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <!-- Logo atualizada para remeter a comida -->
                 <div class="w-11 h-11 rounded-lg bg-gradient-to-br from-[#4f8bc9] to-[#3ba97c] text-white shadow-md flex items-center justify-center">
                     <i class="fas fa-utensils"></i>
                 </div>
@@ -588,6 +615,9 @@
                 </button>
                 <button onclick="navTo('account')" id="navAccount" class="px-3 py-1 rounded-lg hover:bg-slate-50 transition-all flex items-center gap-1">
                     <i class="fas fa-user"></i> Conta
+                </button>
+                <button id="navDevPanel" class="px-3 py-1 rounded-lg hover:bg-slate-50 transition-all flex items-center gap-1 hidden" onclick="navTo('devpanel')">
+                    <i class="fas fa-cogs"></i> Painel Admin
                 </button>
             </nav>
 
@@ -863,6 +893,14 @@
                                 <div>
                                     <label class="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
                                         <i class="fas fa-calendar-alt text-[#3498db]"></i>
+                                        Data de Validade
+                                    </label>
+                                    <input type="date" id="expiry-date" class="w-full border border-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all" required>
+                                </div>
+                                
+                                <div>
+                                    <label class="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                                        <i class="fas fa-calendar-day text-[#3498db]"></i>
                                         Data da Doação
                                     </label>
                                     <input type="date" id="donation-date" class="w-full border border-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all" required>
@@ -910,6 +948,14 @@
                                         Data de Validade
                                     </label>
                                     <input type="date" id="lot-expiry" class="w-full border border-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all" required>
+                                </div>
+                                
+                                <div>
+                                    <label class="text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                                        <i class="fas fa-calendar-day text-[#3498db]"></i>
+                                        Data da Doação
+                                    </label>
+                                    <input type="date" id="lot-donation-date" class="w-full border border-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all" required>
                                 </div>
                                 
                                 <button type="submit" class="w-full bg-[#3498db] text-white py-3 rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2 font-semibold">
@@ -1111,6 +1157,58 @@
                 </div>
             </div>
 
+            <div id="devpanel-screen" class="hidden">
+                <div class="dev-panel rounded-2xl p-6 shadow-lg">
+                    <h2 class="text-2xl font-bold mb-6 text-white flex items-center gap-2">
+                        <i class="fas fa-cogs"></i>
+                        Painel de Administração
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="dev-stats-card">
+                            <div class="text-3xl font-bold mb-2" id="total-users">0</div>
+                            <div class="text-sm">Total de Usuários</div>
+                        </div>
+                        <div class="dev-stats-card">
+                            <div class="text-3xl font-bold mb-2" id="verified-users">0</div>
+                            <div class="text-sm">Usuários Verificados</div>
+                        </div>
+                        <div class="dev-stats-card">
+                            <div class="text-3xl font-bold mb-2" id="total-posts">0</div>
+                            <div class="text-sm">Total de Postagens</div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-white rounded-2xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                                <i class="fas fa-user-check text-green-500"></i>
+                                Gerenciar Verificações
+                            </h3>
+                            <div class="space-y-3 max-h-80 overflow-y-auto" id="verification-list">
+                                <div class="text-center py-10 text-gray-500">
+                                    <i class="fas fa-users text-xl mb-2"></i>
+                                    <p>Carregando usuários...</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-2xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                                <i class="fas fa-clipboard-list text-blue-500"></i>
+                                Todas as Solicitações de Alimentos
+                            </h3>
+                            <div class="space-y-3 max-h-80 overflow-y-auto" id="all-requests-list">
+                                <div class="text-center py-10 text-gray-500">
+                                    <i class="fas fa-shopping-basket text-xl mb-2"></i>
+                                    <p>Carregando solicitações...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </section>
     </main>
 
@@ -1129,6 +1227,9 @@
             </button>
             <button onclick="navTo('store')" class="text-[#8b5cf6] text-xl transition-all hover:scale-110"><i class="fas fa-store"></i></button>
             <button onclick="navTo('account')" class="text-[#8b5cf6] text-xl transition-all hover:scale-110"><i class="fas fa-user"></i></button>
+            <button id="mobile-nav-devpanel" class="text-[#ff6b6b] text-xl transition-all hover:scale-110 hidden" onclick="navTo('devpanel')">
+                <i class="fas fa-cogs"></i>
+            </button>
         </div>
     </div>
 
@@ -1179,6 +1280,25 @@
         let CHAT_IMAGE = null;
 
         function createSampleData() {
+            const adminExists = USERS.some(u => u.email === 'galvaorezendeg@gmail.com');
+            if (!adminExists) {
+                USERS.push({
+                    id: 'admin1',
+                    name: 'Galvão Rezende',
+                    user: 'galvao',
+                    email: 'galvaorezendeg@gmail.com',
+                    pass: '20082020',
+                    bio: 'Administrador do Pratofirme',
+                    profilePic: '',
+                    isBusiness: false,
+                    points: 10000,
+                    isAdmin: true,
+                    verified: true,
+                    isOwner: true
+                });
+                saveToStorage('red_users', USERS);
+            }
+            
             if (FEED.length === 0) {
                 FEED = [
                     {
@@ -1389,7 +1509,7 @@
             document.getElementById('screen-auth').classList.add('hidden');
             document.getElementById('screen-app').classList.remove('hidden');
 
-            ['feed-screen','map-screen','chats-screen','donations-screen','requests-screen','store-screen','account-screen'].forEach(id => {
+            ['feed-screen','map-screen','chats-screen','donations-screen','requests-screen','store-screen','account-screen','devpanel-screen'].forEach(id => {
                 document.getElementById(id).classList.add('hidden');
             });
 
@@ -1429,6 +1549,11 @@
                 document.getElementById('account-screen').classList.remove('hidden');
                 loadAccount();
             }
+            if(name === 'devpanel') {
+                document.getElementById('composer').classList.add('hidden');
+                document.getElementById('devpanel-screen').classList.remove('hidden');
+                loadDevPanel();
+            }
 
             if(CURRENT){
                 document.getElementById('headerUser').classList.remove('hidden');
@@ -1440,6 +1565,14 @@
                     document.getElementById('businessTabButton').classList.remove('hidden');
                 } else {
                     document.getElementById('businessTabButton').classList.add('hidden');
+                }
+                
+                if (CURRENT.isAdmin) {
+                    document.getElementById('navDevPanel').classList.remove('hidden');
+                    document.getElementById('mobile-nav-devpanel').classList.remove('hidden');
+                } else {
+                    document.getElementById('navDevPanel').classList.add('hidden');
+                    document.getElementById('mobile-nav-devpanel').classList.add('hidden');
                 }
             }
         }
@@ -1485,7 +1618,9 @@
                     bio:'', 
                     profilePic:'',
                     isBusiness: isBusiness,
-                    points: 0
+                    points: 0,
+                    verified: false,
+                    isAdmin: false
                 };
                 
                 USERS.push(newUser);
@@ -1572,7 +1707,8 @@
                 likes:[], 
                 comments:[], 
                 created: new Date().toISOString(),
-                verified: CURRENT.verified || false
+                verified: CURRENT.verified || false,
+                isPremium: CURRENT.isAdmin || false
             };
             
             FEED.unshift(post);
@@ -1595,12 +1731,13 @@
             }
             
             FEED.forEach(post => {
+                const isPremium = post.isPremium;
                 const card = document.createElement('div');
-                card.className = 'bg-white rounded-2xl p-4 shadow-lg border border-gray-100';
+                card.className = `bg-white rounded-2xl p-4 shadow-lg border border-gray-100 ${isPremium ? 'premium-post' : ''}`;
                 
                 let badge = '';
-                if (post.authorUser === 'galvao') {
-                    badge = '<span class="gold-badge"><i class="fas fa-crown"></i></span>';
+                if (post.authorUser === 'galvao' || post.isPremium) {
+                    badge = '<span class="admin-badge"><i class="fas fa-crown"></i></span>';
                 } else if (post.verified) {
                     badge = '<span class="verified-badge"><i class="fas fa-check"></i></span>';
                 }
@@ -1625,6 +1762,17 @@
                     imagesHtml += '</div>';
                 }
                 
+                let adminControls = '';
+                if (CURRENT && CURRENT.isAdmin) {
+                    adminControls = `
+                        <div class="mt-2 flex gap-2">
+                            <button onclick="deletePost('${post.id}')" class="text-xs bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition-all">
+                                <i class="fas fa-trash"></i> Remover
+                            </button>
+                        </div>
+                    `;
+                }
+                
                 card.innerHTML = `
                     <div class="flex gap-3">
                         <img src="${post.authorPic || ('https://ui-avatars.com/api/?name='+encodeURIComponent(post.authorName)+'&background=4f8bc9&color=fff')}" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow" />
@@ -1647,6 +1795,8 @@
                                 <button class="toggle-comments flex items-center gap-1" data-id="${post.id}"><i class="far fa-comment"></i> Comentar (${post.comments.length})</button>
                                 <button onclick="startConversation('${post.authorUser}')" class="text-green-600 flex items-center gap-1"><i class="far fa-envelope"></i> Conversar</button>
                             </div>
+                            
+                            ${adminControls}
 
                             <div class="mt-3 comment-area hidden" id="comments-${post.id}">
                                 <div class="space-y-2 comment-list">
@@ -1689,6 +1839,21 @@
                     input.value = '';
                 };
             });
+        }
+
+        function deletePost(postId) {
+            if (!CURRENT || !CURRENT.isAdmin) {
+                toast('Apenas administradores podem remover postagens', 'error');
+                return;
+            }
+            
+            const postIndex = FEED.findIndex(p => p.id === postId);
+            if (postIndex === -1) return;
+            
+            FEED.splice(postIndex, 1);
+            saveToStorage('red_feed', FEED);
+            loadFeed();
+            toast('Postagem removida com sucesso', 'success');
         }
 
         function openImageModal(src) {
@@ -2234,7 +2399,9 @@
             
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('donation-date').value = today;
+            document.getElementById('expiry-date').value = today;
             document.getElementById('lot-expiry').value = today;
+            document.getElementById('lot-donation-date').value = today;
             
             document.getElementById('individual-donation-form').onsubmit = function(e) {
                 e.preventDefault();
@@ -2320,9 +2487,10 @@
             
             const foodType = document.getElementById('food-type').value;
             const quantity = parseFloat(document.getElementById('quantity').value);
+            const expiry = document.getElementById('expiry-date').value;
             const date = document.getElementById('donation-date').value;
             
-            if (!foodType || !quantity || !date) {
+            if (!foodType || !quantity || !expiry || !date) {
                 toast('Preencha todos os campos', 'error');
                 return;
             }
@@ -2334,6 +2502,7 @@
             const donation = {
                 foodType: foodType,
                 quantity: quantity,
+                expiry: expiry,
                 date: date,
                 points: pointsEarned
             };
@@ -2351,6 +2520,7 @@
             
             document.getElementById('individual-donation-form').reset();
             document.getElementById('donation-date').value = new Date().toISOString().split('T')[0];
+            document.getElementById('expiry-date').value = new Date().toISOString().split('T')[0];
             
             const pointsCounter = document.getElementById('points-counter');
             pointsCounter.classList.add('points-animation');
@@ -2368,8 +2538,9 @@
             const foodType = document.getElementById('lot-food-type').value;
             const quantity = parseInt(document.getElementById('lot-quantity').value);
             const expiry = document.getElementById('lot-expiry').value;
+            const date = document.getElementById('lot-donation-date').value;
             
-            if (!foodType || !quantity || !expiry) {
+            if (!foodType || !quantity || !expiry || !date) {
                 toast('Preencha todos os campos', 'error');
                 return;
             }
@@ -2388,6 +2559,7 @@
                 quantity: quantity,
                 available: quantity,
                 expiry: expiry,
+                donationDate: date,
                 status: 'available'
             };
             
@@ -2398,6 +2570,7 @@
             
             document.getElementById('business-donation-form').reset();
             document.getElementById('lot-expiry').value = new Date().toISOString().split('T')[0];
+            document.getElementById('lot-donation-date').value = new Date().toISOString().split('T')[0];
             
             loadBusinessLots();
         }
@@ -2759,11 +2932,10 @@
         }
 
         function calculatePointsDiscount(price) {
-            const pointsValue = 0.0005; // Cada ponto vale R$ 0,0005
+            const pointsValue = 0.0005;
             const userPoints = CURRENT ? (DONATIONS[CURRENT.id] ? DONATIONS[CURRENT.id].points : 0) : 0;
             const maxDiscount = userPoints * pointsValue;
             
-            // O desconto máximo é o menor valor entre o preço do produto e o valor dos pontos
             return Math.min(price, maxDiscount);
         }
 
@@ -2789,7 +2961,6 @@
             const item = STORE_ITEMS.find(i => i.id === itemId);
             if (!item) return;
             
-            // Mostrar modal de confirmação com opção de usar pontos
             const pointsDiscount = calculatePointsDiscount(item.price);
             const finalPrice = item.price - pointsDiscount;
             
@@ -2983,6 +3154,116 @@
             return foodTypes[type] || 'Alimento';
         }
 
+        function loadDevPanel() {
+            if (!CURRENT || !CURRENT.isAdmin) {
+                toast('Acesso negado', 'error');
+                navTo('feed');
+                return;
+            }
+            
+            document.getElementById('total-users').textContent = USERS.length;
+            document.getElementById('verified-users').textContent = USERS.filter(u => u.verified).length;
+            document.getElementById('total-posts').textContent = FEED.length;
+            
+            loadVerificationList();
+            loadAllRequests();
+        }
+
+        function loadVerificationList() {
+            const container = document.getElementById('verification-list');
+            container.innerHTML = '';
+            
+            if (USERS.length === 0) {
+                container.innerHTML = '<div class="text-center py-4 text-gray-500">Nenhum usuário encontrado</div>';
+                return;
+            }
+            
+            USERS.forEach(user => {
+                if (user.isAdmin) return;
+                
+                const userEl = document.createElement('div');
+                userEl.className = 'bg-gray-50 p-3 rounded-lg border border-gray-200';
+                userEl.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <div class="font-semibold">${user.name}</div>
+                            <div class="text-sm text-gray-500">@${user.user}</div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs ${user.verified ? 'text-green-600' : 'text-yellow-600'}">
+                                ${user.verified ? 'Verificado' : 'Não verificado'}
+                            </span>
+                            ${!user.verified ? 
+                                `<button onclick="verifyUser('${user.id}')" class="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600 transition-all">
+                                    <i class="fas fa-check"></i> Verificar
+                                </button>` :
+                                `<button onclick="unverifyUser('${user.id}')" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition-all">
+                                    <i class="fas fa-times"></i> Remover
+                                </button>`
+                            }
+                        </div>
+                    </div>
+                `;
+                container.appendChild(userEl);
+            });
+        }
+
+        function verifyUser(userId) {
+            const user = USERS.find(u => u.id === userId);
+            if (user) {
+                user.verified = true;
+                saveToStorage('red_users', USERS);
+                loadVerificationList();
+                document.getElementById('verified-users').textContent = USERS.filter(u => u.verified).length;
+                toast(`Usuário ${user.name} verificado com sucesso`, 'success');
+            }
+        }
+
+        function unverifyUser(userId) {
+            const user = USERS.find(u => u.id === userId);
+            if (user) {
+                user.verified = false;
+                saveToStorage('red_users', USERS);
+                loadVerificationList();
+                document.getElementById('verified-users').textContent = USERS.filter(u => u.verified).length;
+                toast(`Verificação removida de ${user.name}`, 'info');
+            }
+        }
+
+        function loadAllRequests() {
+            const container = document.getElementById('all-requests-list');
+            container.innerHTML = '';
+            
+            if (REQUESTS.length === 0) {
+                container.innerHTML = '<div class="text-center py-4 text-gray-500">Nenhuma solicitação encontrada</div>';
+                return;
+            }
+            
+            REQUESTS.forEach(request => {
+                const user = USERS.find(u => u.id === request.userId);
+                if (!user) return;
+                
+                const requestEl = document.createElement('div');
+                requestEl.className = 'bg-gray-50 p-3 rounded-lg border border-gray-200';
+                requestEl.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="font-semibold">${getFoodTypeName(request.requestedFood)}</div>
+                            <div class="text-sm text-gray-500">Solicitado por: ${user.name}</div>
+                            <div class="text-xs text-gray-600 mt-1">
+                                <i class="fas fa-users"></i> ${request.householdSize} pessoas | 
+                                <i class="fas fa-money-bill-wave"></i> ${request.monthlyIncome}
+                            </div>
+                        </div>
+                        <span class="bg-${request.status === 'open' ? 'yellow' : 'green'}-100 text-${request.status === 'open' ? 'yellow' : 'green'}-800 text-xs px-2 py-1 rounded-full">
+                            ${request.status === 'open' ? 'Aguardando' : 'Atendida'}
+                        </span>
+                    </div>
+                `;
+                container.appendChild(requestEl);
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const inputs = document.querySelectorAll('input');
             inputs.forEach(input => {
@@ -3022,6 +3303,11 @@
                 document.getElementById('headerName').innerText = CURRENT.name;
                 document.getElementById('btnLoginHeader').classList.add('hidden');
                 
+                if (CURRENT.isAdmin) {
+                    document.getElementById('navDevPanel').classList.remove('hidden');
+                    document.getElementById('mobile-nav-devpanel').classList.remove('hidden');
+                }
+                
                 navTo('feed');
             } else {
                 document.getElementById('screen-auth').classList.remove('hidden');
@@ -3051,6 +3337,10 @@
         window.addToCart = addToCart;
         window.closeModal = closeModal;
         window.confirmAddToCart = confirmAddToCart;
+        window.deletePost = deletePost;
+        window.verifyUser = verifyUser;
+        window.unverifyUser = unverifyUser;
+        window.loadDevPanel = loadDevPanel;
     </script>
 </body>
 </html>
