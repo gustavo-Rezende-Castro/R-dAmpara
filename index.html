@@ -810,18 +810,55 @@
       gap: 8px;
       height: calc(100vh - 200px);
     }
+    
+    /* Estilo para prévia de foto */
+    .profile-pic-container {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .profile-pic-container:hover .profile-pic-overlay {
+      opacity: 1;
+    }
+    
+    .profile-pic-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      color: white;
+      font-size: 14px;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    /* Estilo para eventos futuros */
+    .future-event {
+      border-left: 4px solid #3ba97c;
+      background-color: #f0f9f5 !important;
+    }
+
+    .future-event:hover {
+      background-color: #e0f2ec !important;
+    }
   </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-green-50 text-gray-800 min-h-screen">
 
- <!--AQUI É ONDE EU MODIFICO A LOGO DA lIZZA-->
- 
   <div class="lizza-container">
-  <div class="lizza-avatar" onclick="startConversation('lizza')">
-    <img src="LIZZA IA.png" alt="Lizza" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
-    <div class="lizza-notification" id="lizzaNotification">!</div>
+    <div class="lizza-avatar" onclick="startConversation('lizza')">
+      <img src="LIZZA IA.png" alt="Lizza" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+      <div class="lizza-notification" id="lizzaNotification">!</div>
+    </div>
   </div>
-</div>
 
   <div id="toasts" class="fixed top-5 right-5 z-50 space-y-2"></div>
 
@@ -872,7 +909,7 @@
           <i class="fas fa-crown"></i> Admin
         </button>
       </nav>
-
+      
       <div class="flex items-center gap-3">
         <div id="headerUser" class="hidden items-center gap-2">
           <div class="relative">
@@ -1190,7 +1227,6 @@
               <button onclick="cancelReply()" class="text-gray-500 hover:text-gray-700 transition-all"><i class="fas fa-times"></i></button>
             </div>
             
-            <!-- CORREÇÃO: Container de mensagens com scroll independente -->
             <div id="chatWindow" class="chat-messages-container"></div>
             
             <div id="lizzaOptions" class="lizza-options hidden"></div>
@@ -1242,7 +1278,6 @@
             </button>
           </div>
           
-          <!-- CORREÇÃO: Container de mensagens mobile com scroll independente -->
           <div class="mobile-chat-messages-container" id="mobileChatMessages"></div>
           
           <div class="mobile-chat-input">
@@ -1267,10 +1302,19 @@
         <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden max-w-4xl mx-auto">
           <div class="profile-header">
             <div class="relative inline-block">
-              <img id="profilePreview" src="" class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg" alt="perfil"/>
+              <div class="profile-pic-container">
+                <img id="profilePreview" src="" class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg" alt="perfil"/>
+                <div class="profile-pic-overlay">
+                  <div>Clique para<br>alterar foto</div>
+                </div>
+              </div>
               <label for="profilePicInput" class="absolute bottom-0 right-0 bg-[#4f8bc9] text-white p-2 rounded-full cursor-pointer shadow-md hover:shadow-lg transition-all">
                 <i class="fas fa-camera"></i>
               </label>
+              <button onclick="removeProfilePicture()" class="absolute bottom-0 right-10 bg-red-500 text-white p-2 rounded-full cursor-pointer shadow-md hover:shadow-lg transition-all">
+                <i class="fas fa-trash"></i>
+              </button>
+              <input id="profilePicInput" type="file" accept="image/*" class="hidden"/>
             </div>
             <h1 id="profileName" class="text-2xl font-bold mt-3"></h1>
             <div class="text-white/80 flex items-center justify-center gap-2 mt-1">
@@ -1471,6 +1515,13 @@ let USER_MARKER = null;
 let ONG_MARKERS = [];
 let LIZZA_CHAT_STATE = 'initial';
 
+// Remove event listeners antigos de forma segura
+function removeAllEventListeners(element, eventType) {
+  const newElement = element.cloneNode(true);
+  element.parentNode.replaceChild(newElement, element);
+  return newElement;
+}
+
 function createDeveloperAccount() {
   const devAccount = {
     id: 'dev001',
@@ -1630,6 +1681,24 @@ function doRegister(){
     toast('Preencha todos os campos','error'); 
     highlightEmptyFields(['regNome', 'regUsuario', 'regEmail', 'regPass', 'regPass2']);
     return; 
+  }
+  
+  if(usuario.length < 3) {
+    toast('O @username deve ter pelo menos 3 caracteres', 'error');
+    document.getElementById('regUsuario').classList.add('input-error', 'shake');
+    return;
+  }
+
+  if(!/^[a-zA-Z0-9_]+$/.test(usuario)) {
+    toast('O @username só pode conter letras, números e underline', 'error');
+    document.getElementById('regUsuario').classList.add('input-error', 'shake');
+    return;
+  }
+
+  if(pass.length < 6) {
+    toast('A senha deve ter pelo menos 6 caracteres', 'error');
+    document.getElementById('regPass').classList.add('input-error', 'shake');
+    return;
   }
   
   if(pass !== pass2){ 
@@ -2113,7 +2182,35 @@ function loadOngsScreen(){
     }
     
     const photosHtml = (ong.photos||[]).slice(0,4).map(src => `<img src="${src}" class="w-20 h-20 object-cover rounded-lg mr-2 shadow">`).join('');
-    const eventsHtml = (ong.events||[]).map(ev => `<div class="bg-gray-100 p-2 rounded-lg mb-1"><strong>${escapeHtml(ev.title)}</strong> • ${escapeHtml(ev.date)}<div class="text-xs text-gray-500">${escapeHtml(ev.desc)}</div></div>`).join('') || '<div class="text-gray-500 text-sm text-center py-2"><i class="fas fa-calendar-times"></i> Nenhum evento</div>';
+    
+    // Exibe eventos com destaque para os futuros
+    const eventsHtml = (ong.events||[]).map(ev => {
+      const startDate = new Date(ev.startDateTime || ev.date);
+      const now = new Date();
+      const isFuture = startDate > now;
+      
+      // Se o evento for futuro, adiciona uma classe especial
+      const futureClass = isFuture ? 'future-event' : '';
+      
+      return `<div class="bg-gray-100 p-3 rounded-lg mb-2 ${futureClass}">
+        <div class="flex justify-between items-start">
+          <div>
+            <strong class="flex items-center gap-2">
+              ${escapeHtml(ev.title)}
+              ${isFuture ? '<span class="bg-green-500 text-white text-xs px-2 py-1 rounded-full"><i class="fas fa-calendar-check"></i> Futuro</span>' : ''}
+            </strong>
+            <div class="text-sm text-gray-600 mt-1">
+              <i class="far fa-clock"></i> 
+              ${ev.startDate ? `${ev.startDate} ${ev.startTime || ''}` : escapeHtml(ev.date)} 
+              ${ev.endDate ? `até ${ev.endDate} ${ev.endTime || ''}` : ''}
+            </div>
+            <div class="text-xs text-gray-500 mt-1">
+              <i class="fas fa-map-marker-alt"></i> ${escapeHtml(ev.location || ev.desc)}
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }).join('') || '<div class="text-gray-500 text-sm text-center py-4"><i class="fas fa-calendar-times"></i> Nenhum evento cadastrado</div>';
 
     card.innerHTML = `
       <div class="flex justify-between items-start">
@@ -2437,7 +2534,35 @@ function loadMyOngs(){
     const card = document.createElement('div');
     card.className = 'bg-white p-4 rounded-2xl shadow-lg border border-gray-100';
     const photosHtml = (ong.photos||[]).slice(0,4).map(src => `<img src="${src}" class="w-20 h-20 object-cover rounded-lg mr-2 shadow">`).join('');
-    const eventsHtml = (ong.events||[]).map(ev => `<div class="bg-gray-100 p-2 rounded-lg mb-1"><strong>${escapeHtml(ev.title)}</strong> • ${escapeHtml(ev.date)}<div class="text-xs text-gray-500">${escapeHtml(ev.desc)}</div></div>`).join('') || '<div class="text-gray-500 text-sm text-center py-2"><i class="fas fa-calendar-times"></i> Nenhum evento</div>';
+    
+    // Exibe eventos com destaque para os futuros
+    const eventsHtml = (ong.events||[]).map(ev => {
+      const startDate = new Date(ev.startDateTime || ev.date);
+      const now = new Date();
+      const isFuture = startDate > now;
+      
+      // Se o evento for futuro, adiciona uma classe especial
+      const futureClass = isFuture ? 'future-event' : '';
+      
+      return `<div class="bg-gray-100 p-3 rounded-lg mb-2 ${futureClass}">
+        <div class="flex justify-between items-start">
+          <div>
+            <strong class="flex items-center gap-2">
+              ${escapeHtml(ev.title)}
+              ${isFuture ? '<span class="bg-green-500 text-white text-xs px-2 py-1 rounded-full"><i class="fas fa-calendar-check"></i> Futuro</span>' : ''}
+            </strong>
+            <div class="text-sm text-gray-600 mt-1">
+              <i class="far fa-clock"></i> 
+              ${ev.startDate ? `${ev.startDate} ${ev.startTime || ''}` : escapeHtml(ev.date)} 
+              ${ev.endDate ? `até ${ev.endDate} ${ev.endTime || ''}` : ''}
+            </div>
+            <div class="text-xs text-gray-500 mt-1">
+              <i class="fas fa-map-marker-alt"></i> ${escapeHtml(ev.location || ev.desc)}
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }).join('') || '<div class="text-gray-500 text-sm text-center py-4"><i class="fas fa-calendar-times"></i> Nenhum evento cadastrado</div>';
 
     card.innerHTML = `
       <div class="flex justify-between items-start">
@@ -2569,43 +2694,172 @@ function addOngPhotos(index){
 
 function openCreateEvent(index){
   const ong = CURRENT.ongs[index];
+  
+  // Calcula a data de hoje para usar como mínimo no formulário
+  const today = new Date().toISOString().split('T')[0];
+  
   const modal = document.createElement('div');
   modal.className = 'fixed inset-0 bg-black/40 flex items-center justify-center z-50';
   modal.innerHTML = `
-    <div class="bg-white rounded-2xl p-6 w-[420px] max-w-[95%] shadow-lg border border-gray-100">
-      <h3 class="text-lg font-semibold mb-3 flex items-center gap-2"><i class="fas fa-calendar-plus text-[#4f8bc9]"></i> Criar evento — ${escapeHtml(ong.nome)}</h3>
-      <div class="relative mb-2">
-        <i class="fas fa-heading absolute left-3 top-3 text-gray-400"></i>
-        <input id="ev_title" placeholder="Título" class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"/>
+    <div class="bg-white rounded-2xl p-6 w-[500px] max-w-[95%] shadow-lg border border-gray-100">
+      <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+        <i class="fas fa-calendar-plus text-[#4f8bc9]"></i> 
+        Criar Evento — ${escapeHtml(ong.nome)}
+      </h3>
+      
+      <div class="space-y-4">
+        <div class="relative">
+          <i class="fas fa-heading absolute left-3 top-3 text-gray-400"></i>
+          <input 
+            id="ev_title" 
+            placeholder="Título do evento" 
+            class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"
+          />
+        </div>
+        
+        <div class="relative">
+          <i class="fas fa-align-left absolute left-3 top-3 text-gray-400"></i>
+          <textarea 
+            id="ev_desc" 
+            placeholder="Descrição breve do que será o evento (máx 200 caracteres)" 
+            maxlength="200" 
+            rows="3"
+            class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"
+          ></textarea>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Data de Início</label>
+            <div class="flex gap-2">
+              <input 
+                id="ev_start_date" 
+                type="date" 
+                min="${today}"
+                class="w-full border border-gray-200 p-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"
+              />
+              <input 
+                id="ev_start_time" 
+                type="time" 
+                class="w-full border border-gray-200 p-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"
+              />
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">Data de Término</label>
+            <div class="flex gap-2">
+              <input 
+                id="ev_end_date" 
+                type="date" 
+                min="${today}"
+                class="w-full border border-gray-200 p-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"
+              />
+              <input 
+                id="ev_end_time" 
+                type="time" 
+                class="w-full border border-gray-200 p-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"
+              />
+            </div>
+          </div>
+        </div>
+        
+        <div class="relative">
+          <i class="fas fa-map-marker-alt absolute left-3 top-3 text-gray-400"></i>
+          <input 
+            id="ev_location" 
+            placeholder="Local do evento (endereço completo)" 
+            class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"
+          />
+        </div>
+        
+        <div class="text-xs text-gray-500">
+          <i class="fas fa-info-circle"></i> 
+          Os eventos futuros serão destacados em verde na listagem.
+        </div>
       </div>
-      <div class="relative mb-2">
-        <i class="fas fa-align-left absolute left-3 top-3 text-gray-400"></i>
-        <textarea id="ev_desc" placeholder="Descrição (máx 200 chars)" maxlength="200" class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"></textarea>
-      </div>
-      <div class="relative mb-3">
-        <i class="fas fa-calendar-day absolute left-3 top-3 text-gray-400"></i>
-        <input id="ev_date" type="date" class="w-full border border-gray-200 pl-10 pr-4 py-2 rounded-lg focus:ring-2 focus:ring-[#4f8bc9] focus:border-transparent outline-none transition-all"/>
-      </div>
-      <div class="flex justify-end gap-2">
-        <button id="ev_cancel" class="bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300 transition-all flex items-center gap-2"><i class="fas fa-times"></i> Cancelar</button>
-        <button id="ev_save" class="bg-[#4f8bc9] text-white px-3 py-1 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-2"><i class="fas fa-check"></i> Salvar</button>
+      
+      <div class="flex justify-end gap-2 mt-6">
+        <button 
+          id="ev_cancel" 
+          class="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 transition-all flex items-center gap-2"
+        >
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+        <button 
+          id="ev_save" 
+          class="bg-[#4f8bc9] text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-2"
+        >
+          <i class="fas fa-check"></i> Salvar Evento
+        </button>
       </div>
     </div>
   `;
+  
   document.body.appendChild(modal);
-  document.getElementById('ev_cancel').onclick = ()=> modal.remove();
-  document.getElementById('ev_save').onclick = ()=>{
+  
+  // Preenche a data de hoje como padrão
+  document.getElementById('ev_start_date').value = today;
+  document.getElementById('ev_end_date').value = today;
+  document.getElementById('ev_start_time').value = '09:00';
+  document.getElementById('ev_end_time').value = '17:00';
+  
+  document.getElementById('ev_cancel').onclick = () => modal.remove();
+  
+  document.getElementById('ev_save').onclick = () => {
     const title = document.getElementById('ev_title').value.trim();
     const desc = document.getElementById('ev_desc').value.trim();
-    const date = document.getElementById('ev_date').value;
-    if(!title || !desc || !date){ toast('Preencha todos os campos do evento','error'); return; }
-    if(!ong.events) ong.events = [];
-    ong.events.push({title, desc, date});
-    const idx = USERS.findIndex(u=>u.email === CURRENT.email);
-    if(idx>=0){ USERS[idx] = CURRENT; localStorage.setItem('red_users', JSON.stringify(USERS)); }
+    const startDate = document.getElementById('ev_start_date').value;
+    const startTime = document.getElementById('ev_start_time').value;
+    const endDate = document.getElementById('ev_end_date').value;
+    const endTime = document.getElementById('ev_end_time').value;
+    const location = document.getElementById('ev_location').value.trim();
+    
+    if (!title || !desc || !startDate || !startTime || !endDate || !endTime || !location) {
+      toast('Preencha todos os campos do evento', 'error');
+      return;
+    }
+    
+    // Combina data e hora
+    const startDateTime = new Date(`${startDate}T${startTime}`);
+    const endDateTime = new Date(`${endDate}T${endTime}`);
+    
+    if (endDateTime <= startDateTime) {
+      toast('A data de término deve ser posterior à data de início', 'error');
+      return;
+    }
+    
+    if (!ong.events) ong.events = [];
+    
+    // Adiciona o evento
+    ong.events.push({
+      id: 'ev' + Date.now(),
+      title,
+      desc,
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+      location,
+      startDateTime: startDateTime.toISOString(),
+      endDateTime: endDateTime.toISOString(),
+      createdAt: new Date().toISOString()
+    });
+    
+    // Ordena eventos por data de início (mais próximos primeiro)
+    ong.events.sort((a, b) => new Date(a.startDateTime) - new Date(b.startDateTime));
+    
+    const idx = USERS.findIndex(u => u.email === CURRENT.email);
+    if (idx >= 0) {
+      USERS[idx] = CURRENT;
+      localStorage.setItem('red_users', JSON.stringify(USERS));
+    }
     localStorage.setItem('red_current', JSON.stringify(CURRENT));
+    
     modal.remove();
-    toast('Evento criado','success');
+    toast('Evento criado com sucesso!', 'success');
+    
+    // Atualiza as telas
     loadMyOngs();
     loadOngsScreen();
   };
@@ -3717,20 +3971,107 @@ function loadAccount(){
     mini.innerHTML = '<div class="text-center py-4 text-gray-500"><i class="fas fa-building text-2xl mb-2"></i><p>Você ainda não criou ONGs</p></div>';
   }
 
-  document.getElementById('profilePicInput').onchange = function(){
-    const f = this.files[0];
-    if(!f) return;
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      CURRENT.profilePic = e.target.result;
-      saveCurrentUser();
-      document.getElementById('profilePreview').src = e.target.result;
-      document.getElementById('composerAvatar').src = e.target.result;
-      document.getElementById('headerAvatar').src = e.target.result;
-      toast('Foto de perfil atualizada','success');
-    };
-    reader.readAsDataURL(f);
-  };
+  // CORREÇÃO DO UPLOAD DE FOTO DE PERFIL
+  const profilePicInput = document.getElementById('profilePicInput');
+  if (profilePicInput) {
+    // Remove event listeners antigos para evitar duplicação
+    const newInput = profilePicInput.cloneNode(true);
+    profilePicInput.parentNode.replaceChild(newInput, profilePicInput);
+    
+    // Adiciona novo event listener
+    document.getElementById('profilePicInput').addEventListener('change', function(e){
+      const file = e.target.files[0];
+      if(!file) return;
+      
+      // Validação do tipo de arquivo
+      const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+      if (!validTypes.includes(file.type)) {
+        toast('Por favor, selecione uma imagem (JPEG, PNG, GIF ou WebP)', 'error');
+        return;
+      }
+      
+      // Validação do tamanho (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        toast('A imagem deve ter no máximo 5MB', 'error');
+        return;
+      }
+      
+      const reader = new FileReader();
+      
+      reader.onloadstart = function() {
+        document.getElementById('profilePreview').style.opacity = '0.5';
+        const loadingIndicator = document.createElement('div');
+        loadingIndicator.className = 'absolute inset-0 flex items-center justify-center';
+        loadingIndicator.innerHTML = '<div class="loading-spinner"></div>';
+        document.querySelector('.profile-pic-container').appendChild(loadingIndicator);
+      };
+      
+      reader.onload = function(e) {
+        CURRENT.profilePic = e.target.result;
+        saveCurrentUser();
+        
+        // Atualiza todas as imagens de perfil
+        document.getElementById('profilePreview').src = e.target.result;
+        document.getElementById('composerAvatar').src = e.target.result;
+        document.getElementById('headerAvatar').src = e.target.result;
+        
+        // Atualiza também para posts existentes
+        FEED.forEach(post => {
+          if (post.authorUser === CURRENT.user) {
+            post.authorPic = e.target.result;
+          }
+        });
+        localStorage.setItem('red_feed', JSON.stringify(FEED));
+        
+        // Remove o indicador de loading
+        const loadingIndicator = document.querySelector('.profile-pic-container .absolute.inset-0');
+        if (loadingIndicator) {
+          loadingIndicator.remove();
+        }
+        document.getElementById('profilePreview').style.opacity = '1';
+        
+        toast('Foto de perfil atualizada com sucesso!', 'success');
+      };
+      
+      reader.onerror = function() {
+        toast('Erro ao carregar a imagem', 'error');
+        document.getElementById('profilePreview').style.opacity = '1';
+        const loadingIndicator = document.querySelector('.profile-pic-container .absolute.inset-0');
+        if (loadingIndicator) {
+          loadingIndicator.remove();
+        }
+      };
+      
+      reader.readAsDataURL(file);
+    });
+  }
+}
+
+function removeProfilePicture() {
+  if (!CURRENT) return;
+  
+  if (!confirm('Tem certeza que deseja remover sua foto de perfil?')) {
+    return;
+  }
+  
+  CURRENT.profilePic = '';
+  saveCurrentUser();
+  
+  const defaultAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(CURRENT.name)}&background=4f8bc9&color=fff`;
+  
+  document.getElementById('profilePreview').src = defaultAvatar;
+  document.getElementById('composerAvatar').src = defaultAvatar;
+  document.getElementById('headerAvatar').src = defaultAvatar;
+  
+  // Atualiza também para posts existentes
+  FEED.forEach(post => {
+    if (post.authorUser === CURRENT.user) {
+      post.authorPic = '';
+    }
+  });
+  localStorage.setItem('red_feed', JSON.stringify(FEED));
+  
+  toast('Foto de perfil removida', 'success');
 }
 
 function saveAccount(){
@@ -4172,6 +4513,7 @@ window.useMyLocationForSearch = useMyLocationForSearch;
 window.openUserProfile = openUserProfile;
 window.useMyLocationForMap = useMyLocationForMap;
 window.showAllOngs = showAllOngs;
+window.removeProfilePicture = removeProfilePicture;
 </script>
 </body>
 </html>
