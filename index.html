@@ -790,7 +790,6 @@
       color: white;
     }
     
-    /* CORREÇÃO DO PROBLEMA DO CHAT */
     .chat-messages-container {
       flex: 1;
       overflow-y: auto;
@@ -811,7 +810,6 @@
       height: calc(100vh - 200px);
     }
     
-    /* Estilo para prévia de foto */
     .profile-pic-container {
       position: relative;
       display: inline-block;
@@ -840,7 +838,6 @@
       pointer-events: none;
     }
 
-    /* Estilo para eventos futuros */
     .future-event {
       border-left: 4px solid #3ba97c;
       background-color: #f0f9f5 !important;
@@ -1514,13 +1511,9 @@ let MAP_AMPARA = null;
 let USER_MARKER = null;
 let ONG_MARKERS = [];
 let LIZZA_CHAT_STATE = 'initial';
-
-// Remove event listeners antigos de forma segura
-function removeAllEventListeners(element, eventType) {
-  const newElement = element.cloneNode(true);
-  element.parentNode.replaceChild(newElement, element);
-  return newElement;
-}
+let LIZZA_CHAT_HISTORY = {};
+let LIZZA_LAST_CLICK_TIME = 0;
+let TICKETS = JSON.parse(localStorage.getItem('red_tickets')) || [];
 
 function createDeveloperAccount() {
   const devAccount = {
@@ -2183,13 +2176,11 @@ function loadOngsScreen(){
     
     const photosHtml = (ong.photos||[]).slice(0,4).map(src => `<img src="${src}" class="w-20 h-20 object-cover rounded-lg mr-2 shadow">`).join('');
     
-    // Exibe eventos com destaque para os futuros
     const eventsHtml = (ong.events||[]).map(ev => {
       const startDate = new Date(ev.startDateTime || ev.date);
       const now = new Date();
       const isFuture = startDate > now;
       
-      // Se o evento for futuro, adiciona uma classe especial
       const futureClass = isFuture ? 'future-event' : '';
       
       return `<div class="bg-gray-100 p-3 rounded-lg mb-2 ${futureClass}">
@@ -2535,13 +2526,11 @@ function loadMyOngs(){
     card.className = 'bg-white p-4 rounded-2xl shadow-lg border border-gray-100';
     const photosHtml = (ong.photos||[]).slice(0,4).map(src => `<img src="${src}" class="w-20 h-20 object-cover rounded-lg mr-2 shadow">`).join('');
     
-    // Exibe eventos com destaque para os futuros
     const eventsHtml = (ong.events||[]).map(ev => {
       const startDate = new Date(ev.startDateTime || ev.date);
       const now = new Date();
       const isFuture = startDate > now;
       
-      // Se o evento for futuro, adiciona uma classe especial
       const futureClass = isFuture ? 'future-event' : '';
       
       return `<div class="bg-gray-100 p-3 rounded-lg mb-2 ${futureClass}">
@@ -2695,7 +2684,6 @@ function addOngPhotos(index){
 function openCreateEvent(index){
   const ong = CURRENT.ongs[index];
   
-  // Calcula a data de hoje para usar como mínimo no formulário
   const today = new Date().toISOString().split('T')[0];
   
   const modal = document.createElement('div');
@@ -2782,13 +2770,13 @@ function openCreateEvent(index){
       <div class="flex justify-end gap-2 mt-6">
         <button 
           id="ev_cancel" 
-          class="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 transition-all flex items-center gap-2"
+          class="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 transition-all"
         >
           <i class="fas fa-times"></i> Cancelar
         </button>
         <button 
           id="ev_save" 
-          class="bg-[#4f8bc9] text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-2"
+          class="bg-[#4f8bc9] text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-all"
         >
           <i class="fas fa-check"></i> Salvar Evento
         </button>
@@ -2798,7 +2786,6 @@ function openCreateEvent(index){
   
   document.body.appendChild(modal);
   
-  // Preenche a data de hoje como padrão
   document.getElementById('ev_start_date').value = today;
   document.getElementById('ev_end_date').value = today;
   document.getElementById('ev_start_time').value = '09:00';
@@ -2820,7 +2807,6 @@ function openCreateEvent(index){
       return;
     }
     
-    // Combina data e hora
     const startDateTime = new Date(`${startDate}T${startTime}`);
     const endDateTime = new Date(`${endDate}T${endTime}`);
     
@@ -2831,7 +2817,6 @@ function openCreateEvent(index){
     
     if (!ong.events) ong.events = [];
     
-    // Adiciona o evento
     ong.events.push({
       id: 'ev' + Date.now(),
       title,
@@ -2846,7 +2831,6 @@ function openCreateEvent(index){
       createdAt: new Date().toISOString()
     });
     
-    // Ordena eventos por data de início (mais próximos primeiro)
     ong.events.sort((a, b) => new Date(a.startDateTime) - new Date(b.startDateTime));
     
     const idx = USERS.findIndex(u => u.email === CURRENT.email);
@@ -2859,7 +2843,6 @@ function openCreateEvent(index){
     modal.remove();
     toast('Evento criado com sucesso!', 'success');
     
-    // Atualiza as telas
     loadMyOngs();
     loadOngsScreen();
   };
@@ -3135,6 +3118,16 @@ function startConversation(targetUser){
   
   const chatId = [CURRENT.user, targetUser].sort().join('_');
   
+  const currentTime = Date.now();
+  if (targetUser === 'lizza' && (currentTime - LIZZA_LAST_CLICK_TIME > 1000)) {
+    LIZZA_CHAT_STATE = 'initial';
+    LIZZA_CHAT_HISTORY[CURRENT.user] = [];
+    
+    document.getElementById('lizzaNotification').style.display = 'none';
+  }
+  
+  LIZZA_LAST_CLICK_TIME = currentTime;
+  
   if(!CHATS[chatId]) {
     CHATS[chatId] = {
       participants: [CURRENT.user, targetUser],
@@ -3149,6 +3142,10 @@ function startConversation(targetUser){
         timestamp: new Date().toISOString(),
         read: true
       });
+      
+      if (!LIZZA_CHAT_HISTORY[CURRENT.user]) {
+        LIZZA_CHAT_HISTORY[CURRENT.user] = [];
+      }
     }
     
     localStorage.setItem('red_chats', JSON.stringify(CHATS));
@@ -3162,7 +3159,8 @@ function startConversation(targetUser){
       showLizzaOptions([
         { text: 'Olá, preciso de ajuda', action: 'help' },
         { text: 'Como usar a plataforma?', action: 'tutorial' },
-        { text: 'Falar com suporte humano', action: 'human_support' }
+        { text: 'Falar com suporte humano', action: 'human_support' },
+        { text: 'Abrir ticket de suporte', action: 'open_ticket' }
       ]);
     }, 500);
   }
@@ -3320,6 +3318,11 @@ function processLizzaMessage(text) {
   const optionsContainer = document.getElementById('lizzaOptions');
   optionsContainer.innerHTML = '';
   
+  if (!LIZZA_CHAT_HISTORY[CURRENT.user]) {
+    LIZZA_CHAT_HISTORY[CURRENT.user] = [];
+  }
+  LIZZA_CHAT_HISTORY[CURRENT.user].push({ sender: 'user', text });
+  
   addMessageToChat(SELECTED_CHAT_ID, CURRENT.user, text, new Date().toISOString());
   
   showLizzaTyping();
@@ -3328,7 +3331,100 @@ function processLizzaMessage(text) {
     let response = '';
     let options = [];
     
-    if (text.toLowerCase().includes('ajuda') || text.toLowerCase().includes('preciso de ajuda')) {
+    const lowerText = text.toLowerCase();
+    
+    const keywords = {
+      'chat': ['chat', 'conversa', 'mensagem', 'enviar mensagem', 'falar com', 'conversar'],
+      'feed': ['feed', 'post', 'publicação', 'publicar', 'compartilhar', 'postar'],
+      'mapa': ['mapa', 'localização', 'local', 'endereço', 'onde', 'procurar'],
+      'ong': ['ong', 'organização', 'instituição', 'projeto social', 'caridade'],
+      'ajuda': ['ajuda', 'suporte', 'problema', 'dificuldade', 'não funciona', 'erro'],
+      'ticket': ['ticket', 'chamado', 'abrir ticket', 'suporte humano', 'falar com humano'],
+      'login': ['login', 'entrar', 'conta', 'senha', 'cadastro', 'registro'],
+      'perfil': ['perfil', 'foto', 'bio', 'biografia', 'editar perfil']
+    };
+    
+    let detectedTopics = [];
+    for (const [topic, words] of Object.entries(keywords)) {
+      if (words.some(word => lowerText.includes(word))) {
+        detectedTopics.push(topic);
+      }
+    }
+    
+    if (detectedTopics.includes('ticket')) {
+      response = 'Entendi que você quer abrir um ticket de suporte! Por favor, descreva detalhadamente o problema que está enfrentando:';
+      options = [
+        { text: 'Cancelar', action: 'back_initial' }
+      ];
+      
+      LIZZA_CHAT_STATE = 'creating_ticket';
+    }
+    else if (LIZZA_CHAT_STATE === 'creating_ticket') {
+      const ticketId = 'T' + Date.now();
+      const ticket = {
+        id: ticketId,
+        userId: CURRENT.id,
+        userName: CURRENT.name,
+        userEmail: CURRENT.email,
+        subject: 'Ticket via Lizza - ' + new Date().toLocaleString(),
+        description: text,
+        status: 'aberto',
+        createdAt: new Date().toISOString(),
+        priority: 'normal'
+      };
+      
+      TICKETS.push(ticket);
+      localStorage.setItem('red_tickets', JSON.stringify(TICKETS));
+      
+      response = '✅ Ticket enviado com sucesso! Número do ticket: ' + ticketId + '\n\nNossa equipe de suporte entrará em contato em breve. Por favor, aguarde até que nossa equipe entre em contato.';
+      
+      LIZZA_CHAT_STATE = 'initial';
+      options = [
+        { text: 'Voltar ao menu', action: 'back_initial' },
+        { text: 'Preciso de mais ajuda', action: 'help' }
+      ];
+    }
+    else if (detectedTopics.includes('chat')) {
+      response = 'Precisa de ajuda com o Chat? Vou te explicar:\n\n• **Para conversar**: Clique em "Conversar" abaixo de qualquer publicação ou no perfil de um usuário\n• **Para responder**: Clique no ícone de resposta (↩️) ao lado da mensagem\n• **Tickets**: Digite "ticket" para falar com suporte humano\n\nO que mais você gostaria de saber sobre o Chat?';
+      options = [
+        { text: 'Como iniciar conversa?', action: 'chat_start' },
+        { text: 'Como responder mensagens?', action: 'chat_reply' },
+        { text: 'Abrir ticket de suporte', action: 'open_ticket' },
+        { text: 'Voltar', action: 'back_help' }
+      ];
+      LIZZA_CHAT_STATE = 'help_chat';
+    }
+    else if (detectedTopics.includes('feed')) {
+      response = 'Vou te ajudar com o Feed!\n\n• **Publicar**: Escreva na caixa de texto e clique em "Publicar"\n• **Imagens**: Clique em "Adicionar imagens" antes de publicar\n• **Interagir**: Curta e comente nas publicações\n\nO que você gostaria de saber especificamente?';
+      options = [
+        { text: 'Como fazer uma publicação?', action: 'feed_post' },
+        { text: 'Como curtir e comentar?', action: 'feed_interact' },
+        { text: 'Como adicionar imagens?', action: 'feed_images' },
+        { text: 'Voltar', action: 'back_help' }
+      ];
+      LIZZA_CHAT_STATE = 'help_feed';
+    }
+    else if (detectedTopics.includes('mapa')) {
+      response = 'O MapAmpara mostra ONGs próximas a você! 🗺️\n\n• **Sua localização**: Clique no botão "Minha Localização"\n• **Filtrar**: Use os filtros por categoria\n• **Detalhes**: Clique nos marcadores para ver informações\n\nComo posso ajudar você com o mapa?';
+      options = [
+        { text: 'Como usar minha localização?', action: 'map_location' },
+        { text: 'Como filtrar ONGs?', action: 'map_filter' },
+        { text: 'Entender os ícones do mapa', action: 'map_icons' },
+        { text: 'Voltar', action: 'back_help' }
+      ];
+      LIZZA_CHAT_STATE = 'help_map';
+    }
+    else if (detectedTopics.includes('ong')) {
+      response = 'Sobre as ONGs na plataforma:\n\n• **Criar ONG**: Vá para "ONGs" → "Criar ONG"\n• **Editar**: Na seção "Minhas ONGs" clique em "Editar"\n• **Eventos**: Adicione eventos às suas ONGs\n\nO que você gostaria de saber sobre ONGs?';
+      options = [
+        { text: 'Como criar uma ONG?', action: 'ong_create' },
+        { text: 'Como editar minha ONG?', action: 'ong_edit' },
+        { text: 'Como adicionar eventos?', action: 'ong_events' },
+        { text: 'Voltar', action: 'back_help' }
+      ];
+      LIZZA_CHAT_STATE = 'help_ongs';
+    }
+    else if (detectedTopics.includes('ajuda')) {
       LIZZA_CHAT_STATE = 'help_main';
       response = 'Claro! Com o que você precisa de ajuda? Escolha uma das opções abaixo:';
       options = [
@@ -3339,7 +3435,7 @@ function processLizzaMessage(text) {
         { text: 'Menu principal', action: 'back_initial' }
       ];
     } 
-    else if (text.toLowerCase().includes('feed')) {
+    else if (detectedTopics.includes('feed')) {
       LIZZA_CHAT_STATE = 'help_feed';
       response = 'Vou te ajudar com o Feed! O que você gostaria de saber?';
       options = [
@@ -3349,7 +3445,7 @@ function processLizzaMessage(text) {
         { text: 'Voltar', action: 'back_help' }
       ];
     }
-    else if (text.toLowerCase().includes('chat')) {
+    else if (detectedTopics.includes('chat')) {
       LIZZA_CHAT_STATE = 'help_chat';
       response = 'Precisa de ajuda com o sistema de Chat? Aqui estão as opções:';
       options = [
@@ -3359,7 +3455,7 @@ function processLizzaMessage(text) {
         { text: 'Voltar', action: 'back_help' }
       ];
     }
-    else if (text.toLowerCase().includes('mapa')) {
+    else if (detectedTopics.includes('mapa')) {
       LIZZA_CHAT_STATE = 'help_map';
       response = 'O MapAmpara ajuda você a encontrar ONGs próximas! Como posso ajudar:';
       options = [
@@ -3369,7 +3465,7 @@ function processLizzaMessage(text) {
         { text: 'Voltar', action: 'back_help' }
       ];
     }
-    else if (text.toLowerCase().includes('ong')) {
+    else if (detectedTopics.includes('ong')) {
       LIZZA_CHAT_STATE = 'help_ongs';
       response = 'Precisa de ajuda com as ONGs? Escolha uma opção:';
       options = [
@@ -3385,7 +3481,8 @@ function processLizzaMessage(text) {
       options = [
         { text: 'Olá, preciso de ajuda', action: 'help' },
         { text: 'Como usar a plataforma?', action: 'tutorial' },
-        { text: 'Falar com suporte humano', action: 'human_support' }
+        { text: 'Falar com suporte humano', action: 'human_support' },
+        { text: 'Abrir ticket de suporte', action: 'open_ticket' }
       ];
     }
     
@@ -3410,12 +3507,6 @@ function showLizzaTyping() {
   chatWindow.scrollTop = chatWindow.scrollHeight;
   
   return typingDiv;
-}
-
-function removeLizzaTyping(typingElement) {
-  if (typingElement && typingElement.parentNode) {
-    typingElement.parentNode.removeChild(typingElement);
-  }
 }
 
 function showLizzaOptions(options) {
@@ -3520,11 +3611,23 @@ function processLizzaAction(action) {
       break;
       
     case 'human_support':
-      response = 'Entendi que você prefere falar com nosso suporte humano! 🤝\n\nVocê pode:\n\n1. **Enviar email**: suporte@redampara.com\n2. **WhatsApp**: (11) 99999-9999\n3. **Conversar com Galvão**: Clique em "Conversar" no perfil dele\n\nNosso time responde em até 24 horas durante dias úteis.';
+      response = 'Entendi que você prefere falar com nosso suporte humano! 🤝\n\nVocê será redirecionado para o perfil do Galvão Rezende, nosso administrador. Lá você pode:\n\n1. **Conversar diretamente** com ele\n2. **Explicar seu problema** em detalhes\n3. **Receber ajuda personalizada**\n\nClique em "Conversar" quando abrir o perfil dele!';
       options = [
-        { text: 'Voltar ao menu', action: 'back_initial' },
-        { text: 'Ainda preciso de ajuda', action: 'help' }
+        { text: 'Redirecionar para Galvão', action: 'redirect_galvao' },
+        { text: 'Voltar ao menu', action: 'back_initial' }
       ];
+      break;
+      
+    case 'redirect_galvao':
+      startConversation('galvao');
+      return;
+      
+    case 'open_ticket':
+      response = 'Vou ajudá-lo a abrir um ticket de suporte! Por favor, descreva detalhadamente o problema que você está enfrentando:';
+      options = [
+        { text: 'Cancelar', action: 'back_initial' }
+      ];
+      LIZZA_CHAT_STATE = 'creating_ticket';
       break;
       
     case 'back_initial':
@@ -3532,8 +3635,10 @@ function processLizzaAction(action) {
       options = [
         { text: 'Olá, preciso de ajuda', action: 'help' },
         { text: 'Como usar a plataforma?', action: 'tutorial' },
-        { text: 'Falar com suporte humano', action: 'human_support' }
+        { text: 'Falar com suporte humano', action: 'human_support' },
+        { text: 'Abrir ticket de suporte', action: 'open_ticket' }
       ];
+      LIZZA_CHAT_STATE = 'initial';
       break;
       
     case 'back_help':
@@ -3545,6 +3650,7 @@ function processLizzaAction(action) {
         { text: 'Ajuda com ONGs', action: 'help_ongs' },
         { text: 'Menu principal', action: 'back_initial' }
       ];
+      LIZZA_CHAT_STATE = 'help_main';
       break;
       
     case 'back_feed':
@@ -3555,6 +3661,7 @@ function processLizzaAction(action) {
         { text: 'Como adicionar imagens?', action: 'feed_images' },
         { text: 'Voltar', action: 'back_help' }
       ];
+      LIZZA_CHAT_STATE = 'help_feed';
       break;
       
     default:
@@ -3563,6 +3670,7 @@ function processLizzaAction(action) {
         { text: 'Preciso de ajuda', action: 'help' },
         { text: 'Menu principal', action: 'back_initial' }
       ];
+      LIZZA_CHAT_STATE = 'initial';
   }
   
   addMessageToChat(SELECTED_CHAT_ID, 'lizza', response, new Date().toISOString());
@@ -3971,26 +4079,21 @@ function loadAccount(){
     mini.innerHTML = '<div class="text-center py-4 text-gray-500"><i class="fas fa-building text-2xl mb-2"></i><p>Você ainda não criou ONGs</p></div>';
   }
 
-  // CORREÇÃO DO UPLOAD DE FOTO DE PERFIL
   const profilePicInput = document.getElementById('profilePicInput');
   if (profilePicInput) {
-    // Remove event listeners antigos para evitar duplicação
     const newInput = profilePicInput.cloneNode(true);
     profilePicInput.parentNode.replaceChild(newInput, profilePicInput);
     
-    // Adiciona novo event listener
     document.getElementById('profilePicInput').addEventListener('change', function(e){
       const file = e.target.files[0];
       if(!file) return;
       
-      // Validação do tipo de arquivo
       const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
       if (!validTypes.includes(file.type)) {
         toast('Por favor, selecione uma imagem (JPEG, PNG, GIF ou WebP)', 'error');
         return;
       }
       
-      // Validação do tamanho (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
         toast('A imagem deve ter no máximo 5MB', 'error');
         return;
@@ -4010,12 +4113,10 @@ function loadAccount(){
         CURRENT.profilePic = e.target.result;
         saveCurrentUser();
         
-        // Atualiza todas as imagens de perfil
         document.getElementById('profilePreview').src = e.target.result;
         document.getElementById('composerAvatar').src = e.target.result;
         document.getElementById('headerAvatar').src = e.target.result;
         
-        // Atualiza também para posts existentes
         FEED.forEach(post => {
           if (post.authorUser === CURRENT.user) {
             post.authorPic = e.target.result;
@@ -4023,7 +4124,6 @@ function loadAccount(){
         });
         localStorage.setItem('red_feed', JSON.stringify(FEED));
         
-        // Remove o indicador de loading
         const loadingIndicator = document.querySelector('.profile-pic-container .absolute.inset-0');
         if (loadingIndicator) {
           loadingIndicator.remove();
@@ -4063,7 +4163,6 @@ function removeProfilePicture() {
   document.getElementById('composerAvatar').src = defaultAvatar;
   document.getElementById('headerAvatar').src = defaultAvatar;
   
-  // Atualiza também para posts existentes
   FEED.forEach(post => {
     if (post.authorUser === CURRENT.user) {
       post.authorPic = '';
@@ -4452,6 +4551,7 @@ window.addEventListener('load', ()=>{
   CURRENT = JSON.parse(localStorage.getItem('red_current')) || null;
   CHATS = JSON.parse(localStorage.getItem('red_chats')) || {};
   USER_LOCATION = JSON.parse(localStorage.getItem('red_user_location')) || null;
+  TICKETS = JSON.parse(localStorage.getItem('red_tickets')) || [];
   
   createDeveloperAccount();
   initLizza();
